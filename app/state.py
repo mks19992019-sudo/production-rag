@@ -1,15 +1,16 @@
-from typing import TypedDict , Optional
-from langchain_core.messages import BaseMessage
+from typing import TypedDict , Optional ,Annotated
 
+from langchain_core.messages import BaseMessage 
+from langgraph.graph import add_messages
 
 
 
 
 # state of our rag agent 
 class AgentState (TypedDict):
-    msg : BaseMessage
+    msg : Annotated[list[BaseMessage],add_messages]
     context : str
-    ans : str
+
 
 
 

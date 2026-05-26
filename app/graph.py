@@ -1,12 +1,15 @@
 from langgraph.graph import StateGraph , END , START
-import retriever
-import agent
+from .retriever import reterival
+from .agent import agent
 from langgraph.checkpoint.redis.aio import AsyncRedisSaver
 import os
-from state import AgentState
+from .state import AgentState
 from contextlib import AbstractAsyncContextManager
 import asyncio
 from langgraph.checkpoint.base import BaseCheckpointSaver
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 
@@ -42,7 +45,7 @@ async def initialize_resources() -> None:
 def build_graph():
     graph = StateGraph(AgentState)
 
-    graph.add_node('retriever',retriever)
+    graph.add_node('retriever',reterival)
     graph.add_node('agent',agent)
 
     graph.add_edge(START,'retriever')
@@ -54,7 +57,7 @@ def build_graph():
 
 def build_workflow(checkpointer: BaseCheckpointSaver):
 
-    return  build_graph().complie(checkpointer)
+    return  build_graph().compile(checkpointer)
 
     
 

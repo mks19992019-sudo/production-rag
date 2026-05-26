@@ -1,7 +1,7 @@
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
-from llm import embedding_model
+from .llm import embedding_model
 import os
 
 from qdrant_client import QdrantClient
