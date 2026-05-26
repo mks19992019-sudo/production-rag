@@ -1,6 +1,7 @@
 from .llm import model
 from langgraph.prebuilt import create_react_agent
 from .state import AgentState
+from .tool import webserch
 system_prompt =   """
 You are the official Career Point University (CPU) AI Assistant.
 
@@ -19,6 +20,9 @@ Rules:
 6. If multiple pieces of retrieved information are relevant, combine them into a single clear answer.
 7. Never claim information that is not explicitly supported by the context.
 8. Prioritize the retrieved context for all university-related questions.
+
+
+use tool when there is no information about the context reterival
 """
 
 model = model()
@@ -26,7 +30,7 @@ model = model()
 
 agent_executor = create_react_agent(
     model=model,
-    tools=[],
+    tools=[webserch],
     prompt=system_prompt
 )
 
@@ -41,6 +45,10 @@ async def agent(state: AgentState):
             Use only this retrieved context:
 
 {state["context"]}
+
+
+
+and use tool also for websearch before give any ans to user just check the tool 
 """
         )
     ] + state["msg"]
