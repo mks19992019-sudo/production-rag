@@ -11,11 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-
 # global_variable 
-
-
 _CHECKPOINTER_CONTEXT : AbstractAsyncContextManager[AsyncRedisSaver] | None = None
 _CHECKPOINTER : AsyncRedisSaver | None = None
 _Workflow = None
@@ -41,7 +37,6 @@ async def initialize_resources() -> None:
 
             
 
-
 def build_graph():
     graph = StateGraph(AgentState)
 
@@ -66,8 +61,21 @@ async def  get_workflow():
 
     return _Workflow
 
+async def get_checkpointer():
+    await initialize_resources()
+    return _CHECKPOINTER
 
 
+async def close_graph_resources() -> None:
+    global _CHECKPOINTER_CONTEXT, _CHECKPOINTER, _Workflow
+
+    async with _resorce_lock:
+        if _CHECKPOINTER_CONTEXT is not None:
+            await _CHECKPOINTER_CONTEXT.__aexit__(None, None, None)
+
+        _CHECKPOINTER_CONTEXT = None
+        _CHECKPOINTER = None
+        _Workflow = None
 
 
 

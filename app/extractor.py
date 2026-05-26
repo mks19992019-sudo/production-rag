@@ -44,10 +44,17 @@ def vector_db(url):
 
 
 # to build the vectore data base
-vector_db("https://cpur.in")
+
+
 
 
 #info = client.get_collection("cpu_docs")
 
 #print(info.points_count)
+async def initialize_vectorstore():
+    if not client.collection_exists("cpu_docs"):
+        vector_db("https://cpur.in")
+        return
+    return
+
 
