@@ -6,3 +6,9 @@ services:
       - "6333:6333"
       - "6343:6334"
 
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_rag
+    ports:
+      - "6379:6379"

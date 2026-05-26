@@ -2,6 +2,12 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
 from llm import embedding_model
+import os
+
+from qdrant_client import QdrantClient
+
+client = QdrantClient(url=os.getenv("QDRANT_URL"))
+
 
 def extract(url):
     loader = WebBaseLoader(url)
@@ -13,8 +19,8 @@ def chunking(documents):
         embeddings=embedding_model(),
         buffer_size=1,
         breakpoint_threshold_type="percentile",
-        breakpoint_threshold_amount=95,
-        min_chunk_size=200,
+        breakpoint_threshold_amount=10,
+        min_chunk_size=50,
     )
 
     return chunker.split_documents(documents)
@@ -30,12 +36,18 @@ def vector_db(url):
     vector_store = QdrantVectorStore.from_documents(
         documents=chunks,
         embedding=embedding_model(),
-        url="http://localhost:6333",
+        url=os.getenv("QDRANT_URL"),
         collection_name="cpu_docs",
     )
 
     return vector_store
 
 
-if __name__ == "__main__":
-    vector_db("https://cpur.in")
+# to build the vectore data base
+vector_db("https://cpur.in")
+
+
+#info = client.get_collection("cpu_docs")
+
+#print(info.points_count)
+
