@@ -12,7 +12,8 @@ async def reterival(state:AgentState):
     vector_store = QdrantVectorStore.from_existing_collection(
         embedding= embedding_model(),
         collection_name="cpu_docs",
-        url= os.getenv("QDRANT_URL")
+        url= os.getenv("QDRANT_URL"),
+        api_key=os.getenv("QDRANT_API_KEY")
     )
 
     docs =    vector_store.similarity_search(qusestion,k=3)

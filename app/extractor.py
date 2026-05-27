@@ -3,10 +3,15 @@ from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
 from .llm import embedding_model
 import os
+from  dotenv import load_dotenv
+
+
+load_dotenv()
 
 from qdrant_client import QdrantClient
 
-client = QdrantClient(url=os.getenv("QDRANT_URL"))
+client = QdrantClient(url=os.getenv("QDRANT_URL"),
+                      api_key=os.getenv("QDRANT_API_KEY"))
 
 
 def extract(url):
@@ -38,6 +43,7 @@ def vector_db(url):
         embedding=embedding_model(),
         url=os.getenv("QDRANT_URL"),
         collection_name="cpu_docs",
+        api_key = os.getenv("QDRANT_API_KEY")
     )
 
     return vector_store
