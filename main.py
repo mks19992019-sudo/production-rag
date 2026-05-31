@@ -9,12 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-
-
-redis_client = Redis(
-    host=os.getenv("REDIS_URL")
-
-)
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -30,6 +25,19 @@ async def lifespan(_: FastAPI):
 app = FastAPI(title='Rag_Agent',
               description='Production rag ',
               lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or your specific frontend URL like "http://localhost:5173"
+    allow_credentials=True,
+    allow_methods=["*"],   # This is what allows the OPTIONS preflight
+    allow_headers=["*"],
+)
+
+redis_client = Redis(
+    host=os.getenv("REDIS_URL")
+
+)
 
 
 class user_msg(BaseModel):
@@ -60,9 +68,9 @@ async def chat(query:user_msg):
     result = await workflow.ainvoke({'msg':user_msg,'context':''},{'configurable':{'thread_id':thread_id}})
 
 
-    final_result = result['msg']
+    final_result = result['answer']
 
-    return final_result[-1].content
+    return final_result
 
 
 

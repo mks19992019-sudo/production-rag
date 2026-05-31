@@ -8,6 +8,7 @@ from contextlib import AbstractAsyncContextManager
 import asyncio
 from langgraph.checkpoint.base import BaseCheckpointSaver
 from dotenv import load_dotenv
+from .Guardrails import Guardrails_agent
 
 load_dotenv()
 
@@ -42,11 +43,20 @@ def build_graph():
 
     graph.add_node('retriever',reterival)
     graph.add_node('agent',agent)
+    graph.add_node('Guardrails',Guardrails_agent)
 
-    graph.add_edge(START,'retriever')
+    graph.add_edge(START,'Guardrails')
+    graph.add_conditional_edges('Guardrails',route_guardrail,{"retriever":"retriever",END:END})
     graph.add_edge('retriever','agent')
+    graph.add_edge('agent',END)
 
     return graph
+
+
+async def route_guardrail(state:AgentState):
+    if state['check']:
+        return "retriever"
+    return END
 
 
 

@@ -10,6 +10,8 @@ from langgraph.graph import add_messages
 class AgentState (TypedDict):
     msg : Annotated[list[BaseMessage],add_messages]
     context : str
+    check : Optional[bool]
+    answer : str
 
 
 
