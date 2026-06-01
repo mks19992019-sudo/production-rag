@@ -9,14 +9,26 @@ from  dotenv import load_dotenv
 load_dotenv()
 
 from qdrant_client import QdrantClient
-try:
-    client = QdrantClient(url=os.getenv("QDRANT_URL"),
-                      api_key=os.getenv("QDRANT_API_KEY"))
-except:
+
+#qdrant_url = os.getenv("QDRANT_URL")
+
+# here we cant use the try and excpet becuse it give some error during the 
+# docker creation so i remove. the claude api key know from the env and just use the one servies 
+
+"""if qdrant_url:
+    client = QdrantClient(
+        url=qdrant_url,
+        api_key=os.getenv("QDRANT_API_KEY")
+    )
+else:
     client = QdrantClient(
         url=os.getenv("QDRANT_URL_LOCAL")
-    )
+    )"""
 
+
+client = QdrantClient(
+        url=os.getenv("QDRANT_URL_LOCAL")
+)
 def extract(url):
     loader = WebBaseLoader(url)
     return loader.load()
@@ -41,19 +53,20 @@ def vector_db(url):
     
 
     # from_documents crete the colletion file if not exit 
-    try:
+    """try:
         vector_store = QdrantVectorStore.from_documents(
         documents=chunks,
         embedding=embedding_model(),
         url=os.getenv("QDRANT_URL"),
         collection_name="cpu_docs",
         api_key = os.getenv("QDRANT_API_KEY")
-    )
-    except:
-        vector_store = QdrantVectorStore.from_documents(
+    )"""
+    #except:
+
+    vector_store = QdrantVectorStore.from_documents(
             documents=chunks,
             embedding=embedding_model(),
-            url = os.getenv('QDRANT_URL_LOACL'),
+            url = os.getenv('QDRANT_URL_LOCAL'),
             collection_name= "cpu_docs"
 
         )
