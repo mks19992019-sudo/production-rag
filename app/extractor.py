@@ -9,10 +9,13 @@ from  dotenv import load_dotenv
 load_dotenv()
 
 from qdrant_client import QdrantClient
-
-client = QdrantClient(url=os.getenv("QDRANT_URL"),
+try:
+    client = QdrantClient(url=os.getenv("QDRANT_URL"),
                       api_key=os.getenv("QDRANT_API_KEY"))
-
+except:
+    client = QdrantClient(
+        url=os.getenv("QDRANT_URL_LOCAL")
+    )
 
 def extract(url):
     loader = WebBaseLoader(url)
@@ -38,13 +41,22 @@ def vector_db(url):
     
 
     # from_documents crete the colletion file if not exit 
-    vector_store = QdrantVectorStore.from_documents(
+    try:
+        vector_store = QdrantVectorStore.from_documents(
         documents=chunks,
         embedding=embedding_model(),
         url=os.getenv("QDRANT_URL"),
         collection_name="cpu_docs",
         api_key = os.getenv("QDRANT_API_KEY")
     )
+    except:
+        vector_store = QdrantVectorStore.from_documents(
+            documents=chunks,
+            embedding=embedding_model(),
+            url = os.getenv('QDRANT_URL_LOACL'),
+            collection_name= "cpu_docs"
+
+        )
 
     return vector_store
 
