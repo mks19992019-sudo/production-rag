@@ -189,4 +189,4 @@ Semantic chunking ensures retrieved chunks are contextually complete. This means
 ## Built By
 
 **Mohit** — AI Engineer  
-[GitHub](https://github.com/yourusername) · [LinkedIn](https://linkedin.com/in/yourprofile)
+ · [LinkedIn](https://www.linkedin.com/in/mohit-kumar-suman-4ab261346/)
