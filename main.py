@@ -29,7 +29,7 @@ app = FastAPI(title='Rag_Agent',
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Or your specific frontend URL like "http://localhost:5173"
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],   # This is what allows the OPTIONS preflight
     allow_headers=["*"],
 )

@@ -1,7 +1,7 @@
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
-from .llm import embedding_model
+from .llm_gateway import embedding_model
 import os
 from  dotenv import load_dotenv
 
@@ -29,6 +29,7 @@ else:
 client = QdrantClient(
         url=os.getenv("QDRANT_URL_LOCAL")
 )
+
 def extract(url):
     loader = WebBaseLoader(url)
     return loader.load()

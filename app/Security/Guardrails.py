@@ -1,4 +1,4 @@
-from .llm import model
+from .llm_gateway import model
 from .state import AgentState
 from pydantic import BaseModel
 from .prompt import Guardrails_prompt
@@ -10,6 +10,8 @@ class t_f(BaseModel):
 
 
 structured_model = model().with_structured_output(t_f)
+
+
 
 
 async def Guardrails_agent(state: AgentState):
