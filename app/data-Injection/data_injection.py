@@ -1,73 +1,71 @@
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
-from .llm_gateway import embedding_model
-import os
-from  dotenv import load_dotenv
-
-
-load_dotenv()
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from app.llm_gateway import jinaEmbedding_model
+from app.config.settings import settings
 
 from qdrant_client import QdrantClient
 
-#qdrant_url = os.getenv("QDRANT_URL")
-
-# here we cant use the try and excpet becuse it give some error during the 
-# docker creation so i remove. the claude api key know from the env and just use the one servies 
-
-"""if qdrant_url:
-    client = QdrantClient(
-        url=qdrant_url,
-        api_key=os.getenv("QDRANT_API_KEY")
-    )
-else:
-    client = QdrantClient(
-        url=os.getenv("QDRANT_URL_LOCAL")
-    )"""
-
 
 client = QdrantClient(
-        url=os.getenv("QDRANT_URL_LOCAL")
-)
+        url=settings.QDRANT_CLUSTER_URL,
+        api_key=settings.QDRANT_API_KEY
+    )
 
 def extract(url):
     loader = WebBaseLoader(url)
     return loader.load()
 
 
-def chunking(documents):
+def chunking_semantic(documents):
+
     chunker = SemanticChunker(
-        embeddings=embedding_model(),
+        embeddings=jinaEmbedding_model(),
         buffer_size=1,
         breakpoint_threshold_type="percentile",
         breakpoint_threshold_amount=10,
         min_chunk_size=50,
     )
 
+
     return chunker.split_documents(documents)
+
+def chunking_Recursive_text_split(documents):
+    text_spliter = RecursiveCharacterTextSplitter(
+        chunk_size = 800,
+        chunk_overlap = 100,
+        separators=["\n\n","\n",". ","  ",""]
+
+    )
+    chunker = text_spliter.split_text(documents)
+
+    return chunker
+
+
+# here .from_documents automatically set dimesion of vector store based on embedding model dimension
+# in our case it 2048 
+# interally 
+'''client.create_collection(
+    collection_name="cpu_docs",
+    vectors_config=VectorParams(
+        size=2048,
+        distance=Distance.COSINE,
+    ),
+)'''
+
 
 
 def vector_db(url):
     docs = extract(url)
 
-    chunks = chunking(docs)
+    chunks = chunking_Recursive_text_split(docs)
     
-
-    # from_documents crete the colletion file if not exit 
-    """try:
-        vector_store = QdrantVectorStore.from_documents(
-        documents=chunks,
-        embedding=embedding_model(),
-        url=os.getenv("QDRANT_URL"),
-        collection_name="cpu_docs",
-        api_key = os.getenv("QDRANT_API_KEY")
-    )"""
-    #except:
 
     vector_store = QdrantVectorStore.from_documents(
             documents=chunks,
-            embedding=embedding_model(),
-            url = os.getenv('QDRANT_URL_LOCAL'),
+            embedding=jinaEmbedding_model(),
+            url = settings.QDRANT_CLUSTER_URL,
             collection_name= "cpu_docs"
 
         )
@@ -75,14 +73,12 @@ def vector_db(url):
     return vector_store
 
 
-# to build the vectore data base
 
-
-
+# internally
 
 #info = client.get_collection("cpu_docs")
-
 #print(info.points_count)
+
 async def initialize_vectorstore():
     if not client.collection_exists("cpu_docs"):
         vector_db("https://cpur.in")
