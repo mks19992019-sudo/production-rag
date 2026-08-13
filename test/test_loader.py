@@ -15,6 +15,6 @@ def test_extractor():
 
 
 
-docs = extract("https://cpur.in")
+docs = extract()
 
 print(docs)

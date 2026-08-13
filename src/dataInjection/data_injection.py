@@ -6,6 +6,7 @@ from src.llm_gateway import jinaEmbedding_model
 from src.config.settings import settings
 
 from qdrant_client import QdrantClient
+import asyncio
 
 
 client = QdrantClient(
@@ -13,8 +14,8 @@ client = QdrantClient(
         api_key=settings.QDRANT_API_KEY
     )
 
-def extract(url):
-    loader = WebBaseLoader(url)
+def extract():
+    loader = TextLoader("Data/raw/cpur_data.txt")
     return loader.load()
 
 
@@ -38,7 +39,7 @@ def chunking_Recursive_text_split(documents):
         separators=["\n\n","\n",". ","  ",""]
 
     )
-    chunker = text_spliter.split_text(documents)
+    chunker = text_spliter.split_documents(documents)
 
     return chunker
 
@@ -66,7 +67,9 @@ def vector_db():
             documents=chunks,
             embedding=jinaEmbedding_model(),
             url = settings.QDRANT_CLUSTER_URL,
-            collection_name= "cpu_docs"
+            api_key=settings.QDRANT_API_KEY,
+            collection_name= "cpu_docs",
+            
 
         )
 
@@ -86,3 +89,7 @@ async def initialize_vectorstore():
     return
 
 
+
+
+if __name__ =="__main__":
+    asyncio.run(initialize_vectorstore())
