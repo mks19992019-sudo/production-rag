@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import WebBaseLoader , TextLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -56,8 +56,8 @@ def chunking_Recursive_text_split(documents):
 
 
 
-def vector_db(url):
-    docs = extract(url)
+def vector_db():
+    docs = extract()
 
     chunks = chunking_Recursive_text_split(docs)
     
@@ -81,7 +81,7 @@ def vector_db(url):
 
 async def initialize_vectorstore():
     if not client.collection_exists("cpu_docs"):
-        vector_db("https://cpur.in")
+        vector_db()
         return
     return
 
