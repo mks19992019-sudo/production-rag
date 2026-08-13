@@ -2,8 +2,8 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import QdrantVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from app.llm_gateway import jinaEmbedding_model
-from app.config.settings import settings
+from src.llm_gateway import jinaEmbedding_model
+from src.config.settings import settings
 
 from qdrant_client import QdrantClient
 

@@ -1,4 +1,4 @@
-from app.llm_gateway import jinaEmbedding_model
+from src.llm_gateway import jinaEmbedding_model
 
 model = jinaEmbedding_model()
 

@@ -1,5 +1,5 @@
-from app.extractor import extract
-from app.graph import get_workflow
+from src.dataInjection.data_injection import extract
+
 
 
 
@@ -13,8 +13,8 @@ def test_extractor():
 
 
 
-from app.extractor import extract
+
 
 docs = extract("https://cpur.in")
 
-#print(docs)
+print(docs)
