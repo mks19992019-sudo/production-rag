@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from app.graph import get_workflow
+from src.graph import get_workflow
 from pydantic import BaseModel
-from app.graph import initialize_resources , close_graph_resources , get_checkpointer
+from src.graph import initialize_resources , close_graph_resources , get_checkpointer
 from contextlib import asynccontextmanager
-from app.data_injection import initialize_vectorstore
+from src.data_injection import initialize_vectorstore
 from redis.asyncio import Redis
 from dotenv import load_dotenv
 load_dotenv()

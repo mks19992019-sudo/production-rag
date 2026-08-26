@@ -4,6 +4,7 @@ from langchain_qdrant import QdrantVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src.llm_gateway import jinaEmbedding_model
 from src.config.settings import settings
+from Data.docs_loader import load_transcript
 
 from qdrant_client import QdrantClient
 import asyncio
@@ -14,9 +15,11 @@ client = QdrantClient(
         api_key=settings.QDRANT_API_KEY
     )
 
+"""
 def extract():
     loader = TextLoader("Data/raw/cpur_data.txt")
     return loader.load()
+    """
 
 
 def chunking_semantic(documents):
@@ -31,6 +34,9 @@ def chunking_semantic(documents):
 
 
     return chunker.split_documents(documents)
+
+
+
 
 def chunking_Recursive_text_split(documents):
     text_spliter = RecursiveCharacterTextSplitter(
@@ -58,7 +64,7 @@ def chunking_Recursive_text_split(documents):
 
 
 def vector_db():
-    docs = extract()
+    docs = load_transcript()
 
     chunks = chunking_Recursive_text_split(docs)
     
@@ -68,7 +74,7 @@ def vector_db():
             embedding=jinaEmbedding_model(),
             url = settings.QDRANT_CLUSTER_URL,
             api_key=settings.QDRANT_API_KEY,
-            collection_name= "cpu_docs",
+            collection_name= "LLM eval",
             
 
         )
@@ -77,13 +83,8 @@ def vector_db():
 
 
 
-# internally
-
-#info = client.get_collection("cpu_docs")
-#print(info.points_count)
-
 async def initialize_vectorstore():
-    if not client.collection_exists("cpu_docs"):
+    if not client.collection_exists("LLM eval"):
         vector_db()
         return
     return
@@ -91,5 +92,5 @@ async def initialize_vectorstore():
 
 
 
-if __name__ =="__main__":
-    asyncio.run(initialize_vectorstore())
+
+asyncio.run(initialize_vectorstore())

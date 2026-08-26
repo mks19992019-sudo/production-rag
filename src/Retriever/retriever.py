@@ -1,5 +1,5 @@
 from langchain_qdrant import QdrantVectorStore
-from ..llm_gateway import embedding_model
+from src.llm_gateway import embedding_model
 import os
 from src.state import AgentState
 from src.config.settings import settings

@@ -1,12 +1,12 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
-from dotenv import load_dotenv
-import os
 from langchain_community.embeddings import JinaEmbeddings
+from src.config.settings import settings
 
 
 
-load_dotenv()
+
+
 
 
 GROQ_API = None
@@ -33,7 +33,7 @@ def jinaEmbedding_model():
 
     if _jina_embeddings is None:
         if JINA_API_KEY is None:
-            JINA_API_KEY = os.getenv("JINA_API_KEY")
+            JINA_API_KEY = settings.JINA_API_KEY
 
         _jina_embeddings = JinaEmbeddings(
             jina_api_key=JINA_API_KEY,
@@ -43,15 +43,38 @@ def jinaEmbedding_model():
 
 
 def model():
+    global GROQ_API
     if GROQ_API is None:
-        GROQ_API = os.getenv('GROQ_API')
+        GROQ_API = settings.GROQ_API_KEY
 
 
     return ChatGroq(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         api_key=GROQ_API
     )
 
 
 
+# we need deepEval model wraper
+
+from deepeval.models import DeepEvalBaseLLM
+
+class GroqJudge(DeepEvalBaseLLM):
+
+    def __init__(self):
+        self.llm = model()
+
+    def load_model(self):
+        return self.llm
+
+    def generate(self, prompt: str) -> str:
+        response = self.llm.invoke(prompt)
+        return response.content
+
+    async def a_generate(self, prompt: str) -> str:
+        response = await self.llm.ainvoke(prompt)
+        return response.content
+
+    def get_model_name(self):
+        return "llama-3.3-70b-versatile"
 
