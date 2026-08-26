@@ -49,7 +49,7 @@ def model():
 
 
     return ChatGroq(
-        model="openai/gpt-oss-120b",
+        model="groq/compound",
         api_key=GROQ_API
     )
 

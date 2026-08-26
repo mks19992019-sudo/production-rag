@@ -39,14 +39,19 @@ for g in golden:
     )
 
 metric = [
-    ContextualRecallMetric(threshold=THRESHOLD,model=JUDGE,include_reason=True),
-    ContextualPrecisionMetric(threshold=THRESHOLD,model=JUDGE,include_reason=True)
+    ContextualRecallMetric(threshold=THRESHOLD,model=JUDGE,include_reason=False),
+    ContextualPrecisionMetric(threshold=THRESHOLD,model=JUDGE,include_reason=False)
 ]
 
-
+from deepeval.evaluate import AsyncConfig
 evaluate(
     test_cases=test_cases,
     metrics=metric,
+    async_config=AsyncConfig(
+        max_concurrent=2,
+        throttle_value=1
+    ),
+
     hyperparameters={
         "retriever": "base_k5",          # vs "reranked" when you swap it in
         "embedding_model": "text-embedding-3-small",
