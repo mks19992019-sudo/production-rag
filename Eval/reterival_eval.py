@@ -2,12 +2,8 @@ from deepeval import evaluate
 import json
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric , ContextualRecallMetric
-
 from test.test_reterival import reterival
 from src.llm_gateway import model , GroqJudge
-
-
-
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
 THRESHOLD = .7
@@ -60,7 +56,10 @@ evaluate(
         "top_k": 5,
         "judge_model": 'JUDGE',
         "golden_set": GOLDEN_PATH,
+
     }
+
+    
 )
 
 

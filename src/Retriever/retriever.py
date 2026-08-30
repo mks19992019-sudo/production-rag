@@ -8,7 +8,7 @@ from src.config.settings import settings
 
 
 
-async def reterival(state:AgentState):
+def reterival(state:AgentState):
     qusestion = state["msg"][-1].content
 
 
