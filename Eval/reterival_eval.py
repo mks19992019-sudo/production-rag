@@ -3,11 +3,12 @@ import json
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric , ContextualRecallMetric
 from test.test_reterival import reterival
-from src.llm_gateway import model , GroqJudge
+from src.llm_gateway import model , GroqJudge ,GroqJudge2
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
 THRESHOLD = .7
-JUDGE = GroqJudge()
+JUDGE1 = GroqJudge()
+JUDGE2 = GroqJudge2()
 
 Reterival = reterival()
 
@@ -35,8 +36,8 @@ for g in golden:
     )
 
 metric = [
-    ContextualRecallMetric(threshold=THRESHOLD,model=JUDGE,include_reason=False),
-    ContextualPrecisionMetric(threshold=THRESHOLD,model=JUDGE,include_reason=False)
+    ContextualRecallMetric(threshold=THRESHOLD,model=JUDGE1,include_reason=False),
+    ContextualPrecisionMetric(threshold=THRESHOLD,model=JUDGE2,include_reason=False)
 ]
 
 from deepeval.evaluate import AsyncConfig
@@ -44,8 +45,8 @@ evaluate(
     test_cases=test_cases,
     metrics=metric,
     async_config=AsyncConfig(
-        max_concurrent=2,
-        throttle_value=1
+        max_concurrent=1,
+        throttle_value=50
     ),
 
     hyperparameters={

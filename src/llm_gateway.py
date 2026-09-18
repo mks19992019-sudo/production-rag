@@ -9,7 +9,9 @@ from src.config.settings import settings
 
 
 
-GROQ_API = None
+GROQ_API:str = None
+GROQ_API2 :str = None
+model_ :str = settings.model_
 JINA_API_KEY = None
 _embeddings = None
 _jina_embeddings = None
@@ -45,13 +47,25 @@ def jinaEmbedding_model():
 def model():
     global GROQ_API
     if GROQ_API is None:
-        GROQ_API = settings.GROQ_API_KEY
+        GROQ_API = settings.GROQ_API_KEY1
 
 
     return ChatGroq(
         model="groq/compound",
         api_key=GROQ_API
     )
+
+def model2():
+    global GROQ_API2
+    if GROQ_API2 is None:
+        GROQ_API2 = settings.GROQ_API_KEY2
+
+    return ChatGroq(
+        model=model_,
+        api_key=GROQ_API2
+
+    )
+
 
 
 
@@ -78,3 +92,21 @@ class GroqJudge(DeepEvalBaseLLM):
     def get_model_name(self):
         return "llama-3.3-70b-versatile"
 
+class GroqJudge2(DeepEvalBaseLLM):
+
+    def __init__(self):
+        self.llm = model2()
+
+    def load_model(self):
+        return self.llm
+
+    def generate(self, prompt: str) -> str:
+        response = self.llm.invoke(prompt)
+        return response.content
+
+    async def a_generate(self, prompt: str) -> str:
+        response = await self.llm.ainvoke(prompt)
+        return response.content
+
+    def get_model_name(self):
+        return model_

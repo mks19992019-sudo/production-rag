@@ -48,12 +48,6 @@
     "source": "Session 7"
   },
   {
-    "id": "g009",
-    "query": "where can a rag chatbot go wrong?",
-    "ideal_answer": "A RAG chatbot has two main failure points, corresponding to its two components: the retriever and the generator. The first failure is when the retriever fetches the wrong documents\u2014if it brings back wrong documents, the generator will produce wrong answers based on that wrong context. The second failure is when the retriever works properly but the generator ignores the retrieved context, hallucinates, and gives a wrong answer anyway. Both components need to work properly for the overall application to work.",
-    "source": "Session 3"
-  },
-  {
     "id": "g010",
     "query": "what exactly does recall at k tell me about my retriever?",
     "ideal_answer": "Recall@k tells you, out of all the correct relevant documents that exist for a query, how many the retriever actually retrieved in its top-k results. For example, if there are two correct documents for a question and the retriever fetches only one of them, the recall is 1 out of 2, or 50%. Recall is always between 0 and 100%, and ideally should be 100%. To get the overall recall@k on your dataset, you compute recall per question and then average across all questions. This tells you how successful your retriever is at fetching the relevant documents.",

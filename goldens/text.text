@@ -1,0 +1,6 @@
+ {
+    "id": "g009",
+    "query": "where can a rag chatbot go wrong?",
+    "ideal_answer": "A RAG chatbot has two main failure points, corresponding to its two components: the retriever and the generator. The first failure is when the retriever fetches the wrong documents\u2014if it brings back wrong documents, the generator will produce wrong answers based on that wrong context. The second failure is when the retriever works properly but the generator ignores the retrieved context, hallucinates, and gives a wrong answer anyway. Both components need to work properly for the overall application to work.",
+    "source": "Session 3"
+  },
