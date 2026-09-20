@@ -47,7 +47,7 @@ def jinaEmbedding_model():
 def model():
     global GROQ_API
     if GROQ_API is None:
-        GROQ_API = settings.GROQ_API_KEY1
+        GROQ_API = settings.GROQ_ap
 
 
     return ChatGroq(
