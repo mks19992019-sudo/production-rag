@@ -46,7 +46,7 @@ evaluate(
     metrics=metric,
     async_config=AsyncConfig(
         max_concurrent=1,
-        throttle_value=50
+        throttle_value=100
     ),
 
     hyperparameters={
