@@ -57,10 +57,8 @@ evaluate(
         "top_k": 5,
         "judge_model": 'JUDGE',
         "golden_set": GOLDEN_PATH,
-
+        
     }
-
-    
 )
 
 

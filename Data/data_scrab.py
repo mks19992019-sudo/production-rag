@@ -22,5 +22,7 @@ output_dir.mkdir(parents=True,exist_ok=True)
 with open(output_dir / "cpur_data.txt" , "w" , encoding="utf-8") as f:
     f.write(data)
 
+
 logfire.info(f'data is store in text formate in dir {output_dir}')
+
 

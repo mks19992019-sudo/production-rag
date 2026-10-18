@@ -9,6 +9,7 @@ from Data.docs_loader import load_transcript
 from qdrant_client import QdrantClient
 import asyncio
 
+print(load_transcript())
 
 client = QdrantClient(
         url=settings.QDRANT_CLUSTER_URL,

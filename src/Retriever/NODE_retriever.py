@@ -21,8 +21,8 @@ def reterival(state:AgentState):
 
     docs =    vector_store.similarity_search(qusestion,k=3)
     context =    "\n\n".join([doc.page_content for doc in docs])
+
     return {
-        
         "context":context
     }
 
