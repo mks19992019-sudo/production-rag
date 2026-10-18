@@ -3,6 +3,7 @@ from src.llm_gateway import jinaEmbedding_model
 from src.config.settings import settings
 from qdrant_client import QdrantClient
 import logfire
+from src.Reranker.Reranker_code import Rerankers
 
 
 client = QdrantClient(
@@ -10,8 +11,6 @@ client = QdrantClient(
     api_key=settings.QDRANT_API_KEY
     
 )
-
-
 
 def reterival():
     vector_db =QdrantVectorStore.from_existing_collection(
@@ -21,10 +20,38 @@ def reterival():
         api_key=settings.QDRANT_API_KEY
         )
     logfire.info('fetch is done')
-    return vector_db.as_retriever(search_kwargs={'k':5})
+    return vector_db.as_retriever(search_kwargs={'k':9})
 
 
-print(reterival().invoke('what is eval'))
+
+class Reranker_reterival:
+    def __init__(self):
+        self.Reranker = Rerankers()
+        self.reterival = reterival()
+    def invoke(self,query,top_k):
+        documents = self.reterival.invoke(query)
+        logfire.info(
+            "Documents retrieved",
+            count=len(documents),
+        )
+
+        results = self.Reranker.rerank(
+            query=query,
+            documents=documents,
+            top_k=top_k,
+        )
+
+        return results
+
+
+
+    
+
+
+
+
+
+
 
 
 

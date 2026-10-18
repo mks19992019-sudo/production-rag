@@ -2,8 +2,9 @@ from deepeval import evaluate
 import json
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric , ContextualRecallMetric
-from test.test_reterival import reterival
+from src.Retriever.EVAL_reterival import reterival,Reranker_reterival
 from src.llm_gateway import model , GroqJudge ,GroqJudge2
+
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
 THRESHOLD = .7
@@ -15,20 +16,25 @@ Reterival = reterival()
 with open(GOLDEN_PATH) as f:
     golden = json.load(f)
 
+
+
 test_cases = []
 
 #print(golden)
 
 for g in golden:
 
-    reterived = Reterival.invoke(g["query"])
-
-    reterival_context = [doc.page_content for doc in reterived]
+    #reterived = Reterival.invoke(g["query"])
+    reterived = Reranker_reterival().invoke(g["query"],5)
+    #
+    #reterival_context = [doc.page_content for doc in reterived]
+    reterival_context = [doc['document'].page_content for doc in reterived]
 
     test_cases.append(
         LLMTestCase(
             input=g["query"],
             expected_output=g['ideal_answer'],
+
             retrieval_context= reterival_context,
             actual_output="(generator not evaluated in this run)"
 

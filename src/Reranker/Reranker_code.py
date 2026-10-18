@@ -53,27 +53,5 @@ class Rerankers:
         ]
 
 
-## testing
-reranker = Rerankers()
 
-query = "What is machine learning?"
-
-documents = [
-    "Machine learning is a branch of artificial intelligence.",
-    "Python is a programming language used for software development.",
-    "Machine learning algorithms learn patterns from data.",
-    "The human heart pumps blood throughout the body.",
-    "Deep learning is a subset of machine learning."
-]
-
-results = reranker.rerank(
-    query=query,
-    documents=documents,
-    top_k=3
-)
-
-for rank, item in enumerate(results, start=1):
-    print(f"\nRank: {rank}")
-    print(f"Score: {item['score']:.4f}")
-    print(f"Document: {item['document']}")
 
