@@ -22,6 +22,7 @@ dependencies = [
     "langgraph>=1.2.0",
     "langgraph-checkpoint-redis>=0.4.1",
     "logfire[system-metrics]>=4.40.0",
+    "mlflow>=3.17.1",
     "pytest>=9.1.1",
     "qdrant-client>=1.18.0",
     "redis>=7.4.0",

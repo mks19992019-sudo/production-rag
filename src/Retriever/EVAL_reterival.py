@@ -20,7 +20,7 @@ def reterival():
         api_key=settings.QDRANT_API_KEY
         )
     logfire.info('fetch is done')
-    return vector_db.as_retriever(search_kwargs={'k':9})
+    return vector_db.as_retriever(search_kwargs={'k':15})
 
 
 
