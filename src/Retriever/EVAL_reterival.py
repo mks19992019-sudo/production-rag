@@ -24,6 +24,9 @@ def reterival():
     return vector_db.as_retriever(search_kwargs={'k':5})
 
 
+print(reterival().invoke('what is eval'))
+
+
 
 #client.delete_collection('cpu_docs')
 #print('delete vector database')
@@ -32,7 +35,7 @@ def reterival():
 
 
 
-#print(reterival().similarity_search(k=2,query='what is eval'))
+
 
 
 
