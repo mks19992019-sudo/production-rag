@@ -29,6 +29,7 @@ logfire.instrument_system_metrics()
 
 
 
+
 def load_transcript():
     logfire.info('Loading the data.... from raw dataset')
 

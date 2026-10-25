@@ -51,12 +51,12 @@ metric = [
     ContextualRecallMetric(
         threshold=THRESHOLD,
         model=JUDGE1,
-        include_reason=False
+        include_reason=True
     ),
     ContextualPrecisionMetric(
         threshold=THRESHOLD,
         model=JUDGE2,
-        include_reason=False
+        include_reason=True
     )
 ]
 
@@ -115,3 +115,6 @@ with mlflow.start_run(run_name="minilm-reranker") as run:
 
     print("MLflow run ID:", run.info.run_id)
     print("Evaluation completed.")
+
+
+
