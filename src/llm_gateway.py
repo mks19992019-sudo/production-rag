@@ -4,11 +4,6 @@ from langchain_community.embeddings import JinaEmbeddings
 from src.config.settings import settings
 
 
-
-
-
-
-
 GROQ_API:str = None
 GROQ_API2 :str = None
 model_ :str = settings.model_

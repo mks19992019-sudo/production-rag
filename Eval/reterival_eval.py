@@ -32,7 +32,7 @@ test_cases = []
 for g in golden:
 
     # reterived = Reterival.invoke(g["query"])
-    reterived = Reranker.invoke(g["query"], 6)
+    reterived = Reranker.invoke(g["query"], 5)
 
     # reterival_context = [doc.page_content for doc in reterived]
     reterival_context = [doc['document'].page_content for doc in reterived]

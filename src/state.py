@@ -6,6 +6,7 @@ from langgraph.graph import add_messages
 
 
 
+
 # state of our rag agent 
 class AgentState (TypedDict):
     msg : Annotated[list[BaseMessage],add_messages]

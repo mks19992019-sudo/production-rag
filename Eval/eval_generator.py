@@ -14,6 +14,7 @@ JUDGE2 = GroqJudge2()
 
 GOLDEN_PATH = "goldens/faithfulness_dataset.json"
 
+
 THRESHOLD = 0.7
 with open (GOLDEN_PATH) as g:
     goldens = json.load(g)

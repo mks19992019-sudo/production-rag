@@ -1,7 +1,7 @@
 from ..llm_gateway import model
 from ..state import AgentState
 from pydantic import BaseModel
-from ..llm_prompts.prompt import Guardrails_prompt
+from ..genrator.llm_prompts.prompt import Guardrails_prompt
 
 
 class t_f(BaseModel):
