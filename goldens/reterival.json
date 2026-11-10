@@ -1,0 +1,348 @@
+
+{
+  "dataset_name": "CPU_Kota_RAG_Golden_Dataset",
+  "version": "1.0",
+  "source": "User-provided Career Point University homepage scrape",
+  "total_cases": 30,
+  "test_cases": [
+    {
+      "id": "CPU001",
+      "question": "What is Career Point University?",
+      "ideal_answer": "Career Point University (CPU) is a self-financed private university located in Kota, Rajasthan. It has over 14 years of academic excellence and is backed by the 33-year legacy of Career Point Group.",
+      "expected_context": [
+        "Career Point University is a self-financed private university in Rajasthan.",
+        "14+ years of academic excellence.",
+        "33-year legacy of Career Point Group."
+      ],
+      "category": "university_overview",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU002",
+      "question": "Where is Career Point University located?",
+      "ideal_answer": "Career Point University is located on National Highway 52, opposite Alaniya Mata Ji Mandir, Alaniya, Kota, Rajasthan 325003.",
+      "expected_context": [
+        "National Highway 52, Opp Alaniya Mata Ji Mandir, Alaniya, Kota, Rajasthan 325003."
+      ],
+      "category": "location",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU003",
+      "question": "Is Career Point University UGC approved?",
+      "ideal_answer": "The university website lists UGC (University Grants Commission) under its Recognition and Disclosures section and describes CPU as UGC approved.",
+      "expected_context": [
+        "UGC – University Grants Commission.",
+        "UGC Approved."
+      ],
+      "category": "recognition",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU004",
+      "question": "Is Career Point University NAAC accredited?",
+      "ideal_answer": "Yes. Career Point University's homepage describes the university as NAAC accredited. The scraped text does not specify its NAAC grade or accreditation cycle.",
+      "expected_context": [
+        "NAAC Accredited."
+      ],
+      "category": "recognition",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU005",
+      "question": "What is the academic focus of Career Point University?",
+      "ideal_answer": "CPU describes itself as an AI-First University that integrates industry-relevant AI learning across its academic programmes.",
+      "expected_context": [
+        "AI-First University.",
+        "Integrates industry-relevant AI learning across all programs."
+      ],
+      "category": "academics",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU006",
+      "question": "How many schools are listed at CPU?",
+      "ideal_answer": "The website lists eight schools: Engineering and Technology, Computer Application and Technology, Commerce and Management, Legal Studies and Governance, Agricultural Sciences, Basic and Applied Sciences, Health and Allied Sciences, Arts and Humanities, and Education. There are nine schools listed.",
+      "expected_context": [
+        "School of Engineering & Technology.",
+        "School of Computer Application & Technology.",
+        "School of Commerce & Management.",
+        "School of Legal Studies & Governance.",
+        "School of Agricultural Sciences.",
+        "School of Basic & Applied Sciences.",
+        "School of Health & Allied Sciences.",
+        "School of Arts & Humanities.",
+        "School of Education."
+      ],
+      "category": "academic_departments",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU007",
+      "question": "What types of academic programmes does CPU offer?",
+      "ideal_answer": "CPU lists Diploma, Undergraduate, Integrated, Dual Degree, Postgraduate, and Doctoral programmes.",
+      "expected_context": [
+        "Diploma.",
+        "Under Graduate.",
+        "Integrated.",
+        "Dual Degree.",
+        "Post Graduate.",
+        "Doctoral."
+      ],
+      "category": "programmes",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU008",
+      "question": "Does CPU offer engineering and technology programmes?",
+      "ideal_answer": "Yes. CPU has a School of Engineering and Technology and lists Engineering and Technology among its academic programme areas. The homepage does not provide a complete list of engineering courses.",
+      "expected_context": [
+        "School of Engineering & Technology.",
+        "Our Programs: Engineering & Technology."
+      ],
+      "category": "programmes",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU009",
+      "question": "Does Career Point University offer computer application courses?",
+      "ideal_answer": "Yes. CPU lists a School of Computer Application and Technology and includes Computer Applications among its programme areas.",
+      "expected_context": [
+        "School of Computer Application & Technology.",
+        "Our Programs: Computer Applications."
+      ],
+      "category": "programmes",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU010",
+      "question": "When are admissions open at CPU?",
+      "ideal_answer": "The university homepage announces admissions open for the 2026-27 academic session.",
+      "expected_context": [
+        "Admission Open for 2026-27.",
+        "Apply for 2026-27."
+      ],
+      "category": "admissions",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU011",
+      "question": "How can I apply for admission to CPU?",
+      "ideal_answer": "Students can apply through the university's online application portal. The website provides an Apply Online option and an Apply Now link.",
+      "expected_context": [
+        "Apply Online.",
+        "Apply Now.",
+        "Quick Admission Links."
+      ],
+      "category": "admissions",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU012",
+      "question": "Where can I find the fee structure of CPU?",
+      "ideal_answer": "The CPU website provides a Fee Structure link under Quick Admission Links. The actual fee amounts are not included in the scraped homepage text.",
+      "expected_context": [
+        "Quick Admission Links.",
+        "Fee Structure."
+      ],
+      "category": "fees",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU013",
+      "question": "Does CPU provide scholarships?",
+      "ideal_answer": "Yes. The university website provides a Scholarship section for Indian students. Specific scholarship amounts and eligibility conditions are not included in the scraped text.",
+      "expected_context": [
+        "Scholarship (For Indian Students)."
+      ],
+      "category": "scholarships",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU014",
+      "question": "Does CPU provide hostel accommodation?",
+      "ideal_answer": "The homepage lists residential facilities and accommodation among campus-life facilities. Specific hostel fees and room details are not provided in the scraped text.",
+      "expected_context": [
+        "Residential Facilities & Living on Campus.",
+        "Accommodations."
+      ],
+      "category": "facilities",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU015",
+      "question": "What placement opportunities does CPU provide?",
+      "ideal_answer": "CPU advertises placement assistance, company visits, placement statistics, and career support for students. The homepage states 100% placement assistance.",
+      "expected_context": [
+        "Placement Opportunities at CPU.",
+        "100% Placement Assistance.",
+        "350+ Companies visited so far."
+      ],
+      "category": "placements",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU016",
+      "question": "What is the average placement offer at CPU?",
+      "ideal_answer": "The CPU homepage advertises an average offer of 4 LPA. This is a university-reported figure and the scraped text does not specify the batch or calculation method.",
+      "expected_context": [
+        "4 LPA Average Offer."
+      ],
+      "category": "placements",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU017",
+      "question": "What is the highest alumni package mentioned on the CPU homepage?",
+      "ideal_answer": "The homepage mentions an alumni package of ₹1.5 crore associated with Ishita Sharma, a B.Tech CSE graduate.",
+      "expected_context": [
+        "Alumni Package ₹1.5 Crore.",
+        "Ishita Sharma.",
+        "B.Tech. (CSE)."
+      ],
+      "category": "placements",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU018",
+      "question": "How many companies have visited Career Point University?",
+      "ideal_answer": "The university homepage states that more than 350 companies have visited CPU.",
+      "expected_context": [
+        "350+ Companies visited so far."
+      ],
+      "category": "placements",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU019",
+      "question": "How many successful startups are associated with CPU?",
+      "ideal_answer": "The homepage displays a figure of 50+ successful startups.",
+      "expected_context": [
+        "50+ Successful Startups."
+      ],
+      "category": "innovation",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU020",
+      "question": "What research areas are highlighted by CPU?",
+      "ideal_answer": "CPU highlights research in nano herbal drug delivery for cancer treatment, plant stress adaptation through defense mechanisms and nanotechnology, and resveratrol in Alzheimer's therapy.",
+      "expected_context": [
+        "Nano Herbal Drug Delivery in Cancer Treatment.",
+        "Plant Stress Adaptation: Defense, Nanotech & Genetics.",
+        "Resveratrol in Alzheimer's Therapy."
+      ],
+      "category": "research",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU021",
+      "question": "How many doctorate faculties does CPU claim to have?",
+      "ideal_answer": "The homepage states that more than 80% of CPU faculty members hold doctoral qualifications.",
+      "expected_context": [
+        "80%+ Doctorate Faculties."
+      ],
+      "category": "faculty",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU022",
+      "question": "How many research publications are mentioned by CPU?",
+      "ideal_answer": "The homepage mentions more than 900 research publications.",
+      "expected_context": [
+        "900+ Research Publication."
+      ],
+      "category": "research",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU023",
+      "question": "Does CPU have international students?",
+      "ideal_answer": "Yes. The homepage states that CPU has more than 350 international students.",
+      "expected_context": [
+        "350+ International Students."
+      ],
+      "category": "campus",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU024",
+      "question": "What student clubs and activities are available at CPU?",
+      "ideal_answer": "CPU advertises more than 15 clubs and societies and over 100 annual events for students.",
+      "expected_context": [
+        "15+ Clubs & Societies.",
+        "100+ Annual Events."
+      ],
+      "category": "student_life",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU025",
+      "question": "What sports and fitness facilities are available at CPU?",
+      "ideal_answer": "The university homepage lists sports facilities and a gymnasium as part of its campus facilities.",
+      "expected_context": [
+        "Sports Facilities.",
+        "Gymnasium."
+      ],
+      "category": "facilities",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU026",
+      "question": "Does CPU have a ragging-free campus?",
+      "ideal_answer": "The university homepage advertises a 100% ragging-free campus.",
+      "expected_context": [
+        "100% Ragging Free."
+      ],
+      "category": "campus_safety",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU027",
+      "question": "What is the admission helpline number of CPU?",
+      "ideal_answer": "The admission helpline number listed by Career Point University is +91-9079134713.",
+      "expected_context": [
+        "Admission Helpline +91-9079134713.",
+        "Admission HelpDesk +91-9079134713."
+      ],
+      "category": "contact",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU028",
+      "question": "What is the official email address of Career Point University?",
+      "ideal_answer": "The official contact email address listed on the university homepage is info@cpuniverse.in.",
+      "expected_context": [
+        "info@cpuniverse.in."
+      ],
+      "category": "contact",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU029",
+      "question": "Does CPU have an academic calendar and examination system?",
+      "ideal_answer": "Yes. The website lists an Academic Calendar and an Academic and Examination Evaluation System under General Information.",
+      "expected_context": [
+        "Academic Calendar.",
+        "Academic and Examination Evaluation System.",
+        "Examination Schedule.",
+        "Exam Results."
+      ],
+      "category": "academics",
+      "metrics": ["contextual_recall", "contextual_precision"]
+    },
+    {
+      "id": "CPU030",
+      "question": "Can a PCB student get admission into B.Tech at Career Point University?",
+      "ideal_answer": "The provided homepage scrape does not contain B.Tech admission eligibility criteria or confirm whether PCB students can apply. The student should consult the official B.Tech programme eligibility page or contact the admissions office.",
+      "expected_context": [
+        "School of Engineering & Technology.",
+        "Under Graduate programmes.",
+        "Admission Helpline +91-9079134713."
+      ],
+      "category": "admission_eligibility",
+      "metrics": ["contextual_recall", "contextual_precision"],
+      "expected_behavior": "The RAG system must not claim PCB eligibility based only on this homepage scrape."
+    }
+  ]
+}

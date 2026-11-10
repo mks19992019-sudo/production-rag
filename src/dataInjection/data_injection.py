@@ -4,23 +4,26 @@ from langchain_qdrant import QdrantVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src.llm_gateway import jinaEmbedding_model
 from src.config.settings import settings
-from Data.docs_loader import load_transcript
+
+import logfire
 
 from qdrant_client import QdrantClient
 import asyncio
 
-print(load_transcript())
+logfire.configure()
+
+
 
 client = QdrantClient(
         url=settings.QDRANT_CLUSTER_URL,
         api_key=settings.QDRANT_API_KEY
     )
 
-"""
+
 def extract():
     loader = TextLoader("Data/raw/cpur_data.txt")
     return loader.load()
-    """
+
 
 
 def chunking_semantic(documents):
@@ -40,12 +43,14 @@ def chunking_semantic(documents):
 
 
 def chunking_Recursive_text_split(documents):
+
     text_spliter = RecursiveCharacterTextSplitter(
         chunk_size = 800,
         chunk_overlap = 100,
         separators=["\n\n","\n",". ","  ",""]
 
     )
+
     chunker = text_spliter.split_documents(documents)
 
     return chunker
@@ -65,17 +70,20 @@ def chunking_Recursive_text_split(documents):
 
 
 def vector_db():
-    docs = load_transcript()
-
+    logfire.info('loading the data and prepare the docs')
+    docs = extract()
+    logfire.info('start chucking of data')
     chunks = chunking_Recursive_text_split(docs)
-    
 
+
+    
+    logfire.info('creating cluster in qudrant with name of CPU RAG')
     vector_store = QdrantVectorStore.from_documents(
             documents=chunks,
             embedding=jinaEmbedding_model(),
             url = settings.QDRANT_CLUSTER_URL,
             api_key=settings.QDRANT_API_KEY,
-            collection_name= "LLM eval",
+            collection_name= "CPU RAG",
             
 
         )
@@ -85,9 +93,13 @@ def vector_db():
 
 
 async def initialize_vectorstore():
-    if not client.collection_exists("LLM eval"):
+
+    if not client.collection_exists("CPU RAG"):
+        logfire.info('vector db not found...')
+
         vector_db()
         return
+    logfire.info('vector db found....')
     return
 
 

@@ -15,11 +15,12 @@ client = QdrantClient(
 def reterival():
     vector_db =QdrantVectorStore.from_existing_collection(
         embedding= jinaEmbedding_model(),
-        collection_name="LLM eval",
+        collection_name="CPU RAG",
         url= settings.QDRANT_CLUSTER_URL,
         api_key=settings.QDRANT_API_KEY
         )
-    logfire.info('fetch is done')
+    logfire.info('fetchting the data ')
+    
     return vector_db.as_retriever(search_kwargs={'k':15})
 
 
@@ -52,11 +53,6 @@ class Reranker_reterival:
 
 
 
-
-
-
-#client.delete_collection('cpu_docs')
-#print('delete vector database')
 
      
 

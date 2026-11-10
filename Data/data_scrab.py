@@ -4,10 +4,11 @@ import json
 from pathlib import Path
 
 
+
 URL = "https://www.cpur.in"
 
 logfire.configure()
-logfire.instrument_system_metrics()
+logfire.info('start scrabing the data...')
 loder = WebBaseLoader(URL)
 logfire.info('web data is succesfully load')
 data =loder.load()
