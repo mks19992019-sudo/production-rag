@@ -1,82 +1,35 @@
+"""Evaluate retriever quality using the LangSmith golden dataset."""
+import argparse
 from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig, DisplayConfig
-import json
-from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
-from src.Retriever.EVAL_reterival import reterival, Reranker_reterival
-from src.llm_gateway import model, GroqJudge, GroqJudge2
-import mlflow
+from deepeval.test_case import LLMTestCase
+from Eval.eval_common import load_examples
+from src.Retriever.EVAL_reterival import Reranker_reterival
+from src.llm_gateway import GroqJudge, GroqJudge2
 
-GOLDEN_PATH = "goldens/reterival.json"
-THRESHOLD = .7
-JUDGE1 = GroqJudge()
-JUDGE2 = GroqJudge2()
-
-
-
-
-
-Reterival = reterival()
-Reranker = Reranker_reterival()
-
-with open(GOLDEN_PATH) as f:
-    golden = json.load(f)
-
-
-test_cases = []
-
-#print(golden)
-
-for g in golden["test_cases"]:
-    
-
-    # reterived = Reterival.invoke(g["query"])
-    reterived = Reranker.invoke(g["question"], 5)
-
-    # reterival_context = [doc.page_content for doc in reterived]
-    reterival_context = [doc['document'].page_content for doc in reterived]
-
-    test_cases.append(
-        LLMTestCase(
-            input=g["question"],
-            expected_output=g['ideal_answer'],
-            retrieval_context=reterival_context,
-            actual_output="(generator not evaluated in this run)"
-        )
+def run(top_k: int = 5):
+    retriever = Reranker_reterival()
+    cases = []
+    for item in load_examples():
+        docs = retriever.invoke(item["question"], top_k)
+        cases.append(LLMTestCase(
+            input=item["question"],
+            actual_output="retrieval-only evaluation",
+            expected_output=item["expected_retrieval_output"] or item["expected_answer"],
+            retrieval_context=[doc["document"].page_content for doc in docs],
+        ))
+    return evaluate(
+        test_cases=cases,
+        metrics=[
+            ContextualRecallMetric(threshold=.7, model=GroqJudge(), include_reason=True),
+            ContextualPrecisionMetric(threshold=.7, model=GroqJudge2(), include_reason=True),
+        ],
+        async_config=AsyncConfig(max_concurrent=1, throttle_value=100),
+        display_config=DisplayConfig(results_folder="./eval_results"),
     )
 
-
-metric = [
-    ContextualRecallMetric(
-        threshold=THRESHOLD,
-        model=JUDGE1,
-        include_reason=True
-    ),
-    ContextualPrecisionMetric(
-        threshold=THRESHOLD,
-        model=JUDGE2,
-        include_reason=True
-    )
-]
-
-
-
-
-
-evaluate(
-        test_cases=test_cases,
-        metrics=metric,
-        async_config=AsyncConfig(
-            max_concurrent=1,
-            throttle_value=100,
-        ),
-        display_config=DisplayConfig(
-            results_folder="./eval_results"
-        ),
-    )
-
-  
-
-
-
-
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--top-k", type=int, default=5)
+    run(parser.parse_args().top_k)
