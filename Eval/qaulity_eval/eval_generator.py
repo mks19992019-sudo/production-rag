@@ -10,16 +10,17 @@ from src.Retriever.EVAL_reterival import Reranker_reterival
 from src.llm_gateway import GroqJudge, GroqJudge2
 
 def run(top_k: int = 6):
-    retriever = Reranker_reterival()
+    #retriever = Reranker_reterival()
     cases = []
     for item in load_examples():
-        docs = retriever.invoke(item["question"], top_k)
-        context = [doc["document"].page_content for doc in docs]
+        #docs = retriever.invoke(item["question"], top_k)
+        #context = [doc["document"].page_content for doc in docs]
         cases.append(LLMTestCase(
             input=item["question"],
-            actual_output=generate(item["question"], context),
-            expected_output=item["expected_answer"],
-            retrieval_context=context,
+            actual_output=generate(item["question"]), # ans genrated by llm
+            expected_output=item["expected_answer"], # actual answer from the dataset
+            context=item["expected_retrieval_output"],
+            
         ))
     return evaluate(
         test_cases=cases,
