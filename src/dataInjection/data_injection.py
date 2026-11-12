@@ -45,8 +45,8 @@ def chunking_semantic(documents):
 def chunking_Recursive_text_split(documents):
 
     text_spliter = RecursiveCharacterTextSplitter(
-        chunk_size = 800,
-        chunk_overlap = 100,
+        chunk_size = 250,
+        chunk_overlap = 50,
         separators=["\n\n","\n",". ","  ",""]
 
     )
@@ -73,7 +73,7 @@ def vector_db():
     logfire.info('loading the data and prepare the docs')
     docs = extract()
     logfire.info('start chucking of data')
-    chunks = chunking_Recursive_text_split(docs)
+    chunks = chunking_semantic(docs)
 
 
     
@@ -93,6 +93,7 @@ def vector_db():
 
 
 async def initialize_vectorstore():
+    #client.delete_collection("CPU RAG")
 
     if not client.collection_exists("CPU RAG"):
         logfire.info('vector db not found...')

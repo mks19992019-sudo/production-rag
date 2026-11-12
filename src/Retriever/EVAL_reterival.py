@@ -19,7 +19,7 @@ def reterival():
         url= settings.QDRANT_CLUSTER_URL,
         api_key=settings.QDRANT_API_KEY
         )
-    logfire.info('fetchting the data ')
+    logfire.info('fetchting the data.... from db ')
     
     return vector_db.as_retriever(search_kwargs={'k':15})
 
