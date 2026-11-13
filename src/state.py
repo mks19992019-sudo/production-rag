@@ -8,9 +8,11 @@ from langgraph.graph import add_messages
 
 
 # state of our rag agent 
-class AgentState (TypedDict):
+class AgentState ():
     msg : Annotated[list[BaseMessage],add_messages]
     context : str
+    documents : list
+    reranked_documents : list
     check : Optional[bool]
     answer : str
 

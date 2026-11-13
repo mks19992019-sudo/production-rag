@@ -1,7 +1,7 @@
 from ..llm_gateway import model
 from ..state import AgentState
 from pydantic import BaseModel
-from ..genrator.llm_prompts.prompt import Guardrails_prompt
+from ..genrator.llm_prompts.genrator_prompt import Guardrails_prompt
 
 
 class t_f(BaseModel):
@@ -23,6 +23,7 @@ async def Guardrails_agent(state: AgentState):
             ("system", Guardrails_prompt),
             ("human", query.content),
         ]
+        
     )
 
     print(result)

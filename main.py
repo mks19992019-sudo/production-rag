@@ -65,10 +65,10 @@ async def chat(query:user_msg):
    
     
     workflow =  await get_workflow()
-    result = await workflow.ainvoke({'msg':user_msg,'context':''},{'configurable':{'thread_id':thread_id}})
+    result = await workflow.ainvoke({'msg':user_msg},{'configurable':{'thread_id':thread_id}})
 
-
-    final_result = result['answer']
+    # use result['msg'][-1].content
+    final_result = result['msg'][-1].content
 
     return final_result
 

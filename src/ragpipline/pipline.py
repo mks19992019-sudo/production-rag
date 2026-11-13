@@ -7,11 +7,11 @@ class rag_pipline:
     def __init__(self):
         self.rerank_retriver = Reranker_reterival()
 
-    def invoke(self,query,top_k):
+    def invoke(self,query,top_k=6,msg_history=None):
         docs = self.rerank_retriver.invoke(query,top_k)
         context = [doc['document'].page_content for doc in docs]
 
-        genrate_ans = generate(query,context)
+        genrate_ans = generate(query=query,context=context,msg=msg_history)
 
         return {
             'query': query,

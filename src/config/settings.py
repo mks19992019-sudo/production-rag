@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     QDRANT_API_KEY:str
     QDRANT_CLUSTER_URL:str
     JINA_API_KEY : str
+    DATABASE_URL: str
+    DATABASE_URL_POOLED: str
 
     model_config = SettingsConfigDict(env_file=".env")
 
