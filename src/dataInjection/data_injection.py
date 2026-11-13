@@ -107,4 +107,3 @@ async def initialize_vectorstore():
 
 
 
-asyncio.run(initialize_vectorstore())
