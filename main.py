@@ -3,7 +3,7 @@ from src.graph import get_workflow
 from pydantic import BaseModel
 from src.graph import initialize_resources , close_graph_resources , get_checkpointer
 from contextlib import asynccontextmanager
-from src.data_injection import initialize_vectorstore
+from src.dataInjection.data_injection import initialize_vectorstore
 from redis.asyncio import Redis
 from dotenv import load_dotenv
 load_dotenv()
