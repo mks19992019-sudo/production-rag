@@ -34,10 +34,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-redis_client = Redis(
-    host=os.getenv("REDIS_URL")
-
-)
 
 
 class user_msg(BaseModel):
