@@ -11,13 +11,13 @@ from src.llm_gateway import GroqJudge, GroqJudge2
 def run(top_k, R_top_k):
     retriever = Reranker_reterival(top_k,R_top_k)
     cases = []
-    examples = load_examples()
+    examples = load_examples(dataset_name="cpu_homepage_golden_dataset")
     for item in examples:
         docs = retriever.invoke(item["question"])
         cases.append(LLMTestCase(
             input=item["question"],
             actual_output="retrieval-only evaluation",
-            expected_output=item["expected_answer"],
+            expected_output=item['expected_retrieval_output'],
             retrieval_context=[doc["document"].page_content for doc in docs],
 
         ))
@@ -33,7 +33,7 @@ def run(top_k, R_top_k):
     save_metric_report(
         evaluation_result, examples,
         ["contextual_recall", "contextual_precision"],
-        "retrieval", top_k,
+        "retrieval", R_top_k
     )
     return evaluation_result
 

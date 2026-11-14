@@ -1,0 +1,337 @@
+{
+  "created_at": "2026-11-14T12:03:01.394524+00:00",
+  "dataset": "golden_quality_eval",
+  "metric": [
+    "contextual_recall",
+    "contextual_precision"
+  ],
+  "top_k": 4,
+  "retrieval_top_k": 8,
+  "average_score": {
+    "contextual_recall": 0.87,
+    "contextual_precision": 0.6458
+  },
+  "total_examples": 20,
+  "cases": [
+    {
+      "id": "CPU_014",
+      "input": "Which campus facilities and student-life amenities are mentioned on the CPU homepage?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because every sentence in the expected output is directly supported by retrieval context—sentence 1 matches content in node 1, and sentences 2 and 3 are covered by nodes 1 and 4 respectively.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.75,
+          "reason": "The score is 0.75 because the first node (rank 1) is relevant, but the second and third nodes (ranks 2‑3) are irrelevant – they focus on AI‑first branding and contact details, which \"does not provide any information about campus facilities or student‑life amenities\" and \"none of which describe campus facilities or student‑life amenities.\" This interleaving of irrelevant nodes lowers the precision. However, a relevant node appears again at rank 4, mentioning \"Explore advanced laboratories, smart classrooms, and world‑class sports facilities,\" which keeps the score from being lower.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_012",
+      "input": "Which individual alumni package examples are shown on the CPU homepage?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because sentence 1 of the expected output is directly covered by node 1 in the retrieval context, and sentence 2 is directly covered by node 3, leaving no gaps.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.75,
+          "reason": "The score is 0.75 because the first node (rank 1) is relevant, but the second and third nodes (ranks 2‑3) are irrelevant, causing the second relevant node (rank 4) to appear later. Since relevant nodes are not all ranked above the irrelevant ones, the precision cannot be higher.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_006",
+      "input": "Which academic session is currently shown as open for admission?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because every sentence (S1‑S5) in the expected output is directly present in the 2nd node of the retrieval context, providing a perfect match.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.5,
+          "reason": "The score is 0.50 because the first node (rank 1) is irrelevant – its reason says it \"does not mention any admission session or the phrase \\\"Admissions 2026 Open\\\"\" – while the relevant answer appears only in the second node (rank 2) whose reason notes it \"explicitly includes the text \\\"Admissions 2026 Open\\\"\". The irrelevant node ahead of the relevant one cuts the precision in half, and the later nodes are also irrelevant, so the score cannot be higher.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_004",
+      "input": "How many schools are listed at CPU, and what are their names?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 0.6,
+          "reason": "The score is 0.60 because sentences 2, 3, 4, 5, 6, and 8 of the expected output are backed by node 4 in the retrieval context, while sentences 1, 7, 9, and 10 lack any supporting node.",
+          "success": false
+        },
+        "contextual_precision": {
+          "score": 0.25,
+          "reason": "The score is 0.25 because the only relevant node (rank 4) appears after three irrelevant nodes. The first node’s reason says “The text only talks about CPU being an ‘AI‑First University’ … no mention of any school names or counts,” the second notes “none of which reference the names or number of schools at CPU,” and the third states “it does not contain any of the school titles…”. Those should be ranked lower, while the fourth node correctly notes “a list of academic areas… ‘Engineering & Technology’, …” indicating the schools. With the relevant node at the bottom, the precision is low but not zero.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_005",
+      "input": "Which approvals, accreditations, and recognitions are explicitly shown on the CPU homepage?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 0.0,
+          "reason": "The score is 0.00 because none of the three sentences in the expected output (sentence 1: accreditation list; sentence 2: \"NAAC Accredited UGC Approved\"; sentence 3: \"NAAC Accredited ICAR Accredited\") can be linked to any node in the retrieval context, as no node mentions UGC, AIU, PCI, NCTE, BAR Council, ICAR, NIRF, or the phrases \"NAAC Accredited\" or \"UGC Approved\".",
+          "success": false
+        },
+        "contextual_precision": {
+          "score": 0.0,
+          "reason": "The score is 0.00 because every retrieved node is irrelevant: node 1’s reason says it \"does not mention any approvals, accreditations, or recognitions\"; node 2’s reason notes it \"none of which reference the required approvals or recognitions\"; node 3’s reason points out it \"contains no mention of the university’s accreditations or recognitions\"; and node 4’s reason states it \"does not include any of the expected approval or accreditation statements.\" Since no relevant nodes appear at any rank, the contextual precision cannot be higher than zero.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_011",
+      "input": "What alumni package figure is highlighted in CPU's placement section?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because sentence 1 directly matches content in node 1 of the retrieval context.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the first two nodes (rank 1 and 2) contain explicit mentions of the alumni package figure – \"1.5 Cr.Alumni Package Now & Growing\" and \"Package₹1.5 Crore\" – directly answering the query, while the later nodes (rank 3 and 4) are unrelated, offering only general university info or AI integration without any reference to the 1.5 Cr figure. The relevant nodes are correctly ranked above the irrelevant ones.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_017",
+      "input": "What is the admission helpline number and general contact email for CPU?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because every sentence in the expected output is directly present in the retrieval context: sentence 1 matches node 3, sentence 2 also matches node 3, and sentence 3 is found in node 2.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.5833333333333333,
+          "reason": "The score is 0.58 because the top‑ranked node (rank 1) is irrelevant – its reason notes it \"does not mention any phone number, email, or address…\" – pushing a useful answer down the list, and another irrelevant node appears at rank 4, preventing a perfect ordering. The relevant nodes at ranks 2 and 3 do contain the exact contact details (e.g., \"Reach Us… Phone+91-9079134713 Emailinfo@cpuniverse.in\" and \"Admission Helpline +91-9079134713\"), but the misplaced irrelevant nodes lower the contextual precision to 0.58.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_010",
+      "input": "What placement assistance does CPU advertise?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the single sentence in the expected output directly matches the phrase in node 3 of the retrieval context.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.3333333333333333,
+          "reason": "The score is 0.33 because the only relevant node (the third node, which “explicitly includes the phrase ‘100%Placement Assistance’”) is preceded by two irrelevant nodes – the first node “discusses testimonials, FAQs, and general placement information but does not mention the specific claim” and the second node “focuses on AI‑first learning and does not contain any statement about placement assistance”. Those higher‑ranked irrelevant nodes lower the precision, keeping the score at 0.33.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_002",
+      "input": "What is the academic focus of Career Point University?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 0.0,
+          "reason": "The score is 0.00 because none of the nodes in retrieval context mention AI‑First, industry‑relevant AI learning, or preparing students for the future, so the expected sentence cannot be linked to any node.",
+          "success": false
+        },
+        "contextual_precision": {
+          "score": 0.0,
+          "reason": "The score is 0.00 because the top‑ranked nodes are all irrelevant: node 1’s reason says it “does not mention AI or an AI‑first academic focus,” node 2 notes it “contains no reference to AI or an AI‑first approach,” node 3 “does not mention AI or an AI‑first strategy,” and node 4 “never states that CPU is an ‘AI‑First University’.” Since no relevant nodes appear before any irrelevant ones, the contextual precision cannot be higher than zero.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_008",
+      "input": "What average placement offer does CPU advertise?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because sentence 1 (“4 LPA Average Offer”) directly matches the phrase found in node 2 of the retrieval context.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.3333333333333333,
+          "reason": "The score is 0.33 because the only node that directly answers the query – node 3, which states \"4 LPAAverage Offer\" – is ranked third, after two irrelevant nodes (node 1 and node 2) that discuss confidence programs and AI‑First curriculum without any placement information. Those earlier irrelevant nodes lower the ranking of the relevant node, resulting in a precision of 1/3.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_009",
+      "input": "How many companies does CPU say have visited so far?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the expected sentence is directly found in node 1 of the retrieval context.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.75,
+          "reason": "The score is 0.75 because node 1 (rank 1) is relevant, but nodes 2 and 3 (ranks 2‑3) are irrelevant and appear before node 4 (rank 4), which is also relevant. This misordering of relevant after irrelevant lowers the precision to three correctly ordered positions out of four.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_015",
+      "input": "Which research topics are highlighted on the CPU homepage, and what does each description say?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because every sentence in the expected output (sentences 1‑3) is directly present in node 2 of the retrieval context, providing a perfect match.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.5,
+          "reason": "The score is 0.50 because the first retrieved node (rank 1) is irrelevant – it \"only mentions that CPU is an 'AI‑First University' … without any reference to the research topics\" – and appears before the relevant node (rank 2) that \"directly lists the three highlighted research topics and their descriptions\". This misplaced irrelevant node reduces the precision to half, resulting in the current score.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_016",
+      "input": "What recent news and blog topics are visible on the CPU homepage?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 0.8,
+          "reason": "The score is 0.80 because sentences 1‑4 and 6‑9 of the expected output are directly supported by node 1 in the retrieval context, but sentence 5 contains the phrase \"Nourish Tomorrow\" which is not mentioned in any node, preventing a perfect recall.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the first node (rank 1) directly contains the required news and blog titles – e.g., \"Registration for the 8th Convocation is now OPEN!\" and \"Spreading Smiles Through Service: Community Outreach Programme in Kota\" – while the subsequent nodes (ranks 2‑4) are irrelevant, discussing AI focus, testimonials, or facilities without any homepage news or blog listings.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_013",
+      "input": "What does the CPU homepage say about clubs, annual events, campus safety, and security?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the single sentence perfectly matches the content of node 1 in the retrieval context.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the first node (rank 1) includes the exact phrasing \"LIFE AT CPUA Vibrant Campus15+Clubs & Societies100+Annual Events100%Ragging Free24/7Secure Campus\", while the later nodes (ranks 2‑4) discuss unrelated topics, so all relevant information is ranked higher than any irrelevant content.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_020",
+      "input": "What questions are listed in the CPU homepage FAQ section?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because each sentence in the expected output is directly present in node 1 of the retrieval context, providing full coverage.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the only relevant node (rank 1) contains the exact FAQ list, as noted in the reason \"The first document contains the exact FAQ list...\", and all subsequent nodes (ranks 2‑4) are clearly irrelevant, each described as not including any FAQ content. Since the relevant node is ranked highest and no irrelevant nodes precede it, the contextual precision cannot be higher than perfect.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_003",
+      "input": "What types of academic programmes does CPU list?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because sentence 1 and sentence 2 of the expected output are fully matched by node 5 (with some overlap from node 4), which contains the exact wording of all program names and the 'Explore Our Diverse Academic Programs…View All Programs' phrasing.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because every node in the retrieval list is relevant and they are already ordered from most to least useful. For example, node 1 mentions \"CPU integrates AI learning \\\"across all programs\\\"\", node 2 contains the FAQ \"What programs does Career Point University offer?\", node 3 lists concrete categories like \"Engineering & Technology, Computer Applications, Commerce & Management\", and node 4 enumerates programme types \"Diploma, Under Graduate, Integrated, Post Graduate, Doctoral\". With all relevant nodes ranked at the top, contextual precision is perfect.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_018",
+      "input": "Where is Career Point University, Kota located?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the single sentence exactly matches the text in node 3 of the retrieval context, giving perfect recall.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.3333333333333333,
+          "reason": "The score is 0.33 because the only relevant node (the third node, whose reason cites the exact address \"National Highway 52, ... Kota\") is preceded by two irrelevant nodes (the first node’s reason says it only gives general info, and the second node’s reason notes it’s a testimonial with no location) and followed by another irrelevant node (the fourth node’s reason mentions only FAQs). Because relevant content isn’t ranked higher than the irrelevant ones, the contextual precision remains low.",
+          "success": false
+        }
+      }
+    },
+    {
+      "id": "CPU_007",
+      "input": "What placement statistics does CPU advertise on its homepage?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the sole sentence of the expected output is fully covered by node 2 in the retrieval context, which contains the exact phrasing for all the key claims.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the three relevant nodes (rank 1, 2, and 3) each contain placement figures—e.g., \"3500+ Placements 1.5 Cr. Alumni Package ...\" and \"3000+ Placements ...\"—while the only irrelevant node (rank 4) is described as focusing on news and events with no placement data, so it is correctly placed after all the relevant nodes.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_019",
+      "input": "Where can a student find CPU's fee structure and scholarship information?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because node 2 in retrieval context contains the exact phrase that matches the expected output sentence.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 0.8333333333333333,
+          "reason": "The score is 0.83 because the first node (rank 1) is relevant – it \"contains the exact phrase \\\"Quick Admission LinksApply Online Fee Structure Scholarship (For Indian Students) Fee Deposition Refund & Cancellation\\\"\" – and the third node (rank 3) is also relevant, offering the same segment. However, the second node (rank 2) is irrelevant, merely stating CPU is an \"AI-First University\" with no fee or scholarship details, and the fourth node (rank 4) is likewise irrelevant, listing generic \"Quick Links\" without mentioning the needed information. The interleaving of an irrelevant node between relevant ones lowers the precision from perfect.",
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "CPU_001",
+      "input": "What is Career Point University, Kota?",
+      "metrics": {
+        "contextual_recall": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because each of the three sentences in the expected output (sentences 1‑3) is directly sourced from node 1 in the retrieval context, with no missing information.",
+          "success": true
+        },
+        "contextual_precision": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because every retrieved node is relevant – node 1 says \"Career Point University Kota | Top Private University in Rajasthan\", node 2 mentions \"Career Point University\" in multiple contexts, node 3 provides core details such as address and contact, and node 4 includes FAQs and testimonials – there are no irrelevant nodes to lower the ranking.",
+          "success": true
+        }
+      }
+    }
+  ]
+}

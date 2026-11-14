@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from deepeval.metrics import GEval
 from deepeval.metrics.g_eval import Rubric
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
-from Eval.eval_common import load_scope_examples
+from Eval.eval_common import DEFAULT_SCOPE_DATASET, load_examples, normalize_scope_example
 from src.llm_gateway import GroqJudge
 from src.pipline.pipline import pipline_eval
 
@@ -64,7 +65,12 @@ def run(top_k: int = 6,
     throttle_seconds: int = 5,
 ):
     rag = pipline_eval()
-    dataset_name, examples = load_scope_examples(dataset_name)
+    dataset_name, examples = load_examples(
+        dataset_name or os.getenv("SCOPE_LANGSMITH_DATASET_NAME", DEFAULT_SCOPE_DATASET),
+        normalizer=normalize_scope_example,
+        required_fields=("question", "expected_action", "success_criteria"),
+        return_dataset_name=True,
+    )
     test_cases = []
     for item in examples:
         result = rag.invoke(item["question"], top_k)
