@@ -4,14 +4,15 @@ from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig, DisplayConfig
 from deepeval.metrics import AnswerRelevancyMetric, ContextualRelevancyMetric, FaithfulnessMetric
 from deepeval.test_case import LLMTestCase
-from Eval.eval_common import load_examples
+from Eval.eval_common import load_examples, save_metric_report
 from src.llm_gateway import GroqJudge, GroqJudge2
 from src.ragpipline.pipline import rag_pipline
 
 def run(top_k: int = 6):
     rag = rag_pipline()
     cases = []
-    for item in load_examples():
+    examples = load_examples()
+    for item in examples:
         result = rag.invoke(item["question"], top_k)
         cases.append(LLMTestCase(
             input=item["question"],
@@ -19,7 +20,7 @@ def run(top_k: int = 6):
             expected_output=item["expected_answer"],
             retrieval_context=result["context"],
         ))
-    return evaluate(
+    evaluation_result = evaluate(
         test_cases=cases,
         metrics=[
             ContextualRelevancyMetric(threshold=.7, model=GroqJudge(), include_reason=True),
@@ -29,6 +30,12 @@ def run(top_k: int = 6):
         async_config=AsyncConfig(max_concurrent=1, throttle_value=100),
         display_config=DisplayConfig(results_folder="./eval_results"),
     )
+    save_metric_report(
+        evaluation_result, examples,
+        ["contextual_relevancy", "faithfulness", "answer_relevancy"],
+        "rag_pipeline", top_k,
+    )
+    return evaluation_result
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -1,6 +1,9 @@
 """Shared dataset loading and normalization for evaluation scripts."""
 from __future__ import annotations
 import os
+import json
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 from dotenv import load_dotenv
 
@@ -102,3 +105,53 @@ def load_scope_examples(dataset_name: str | None = None) -> tuple[str, list[dict
             f"invalid rows: {missing}"
         )
     return dataset_name, normalized
+
+
+def save_metric_report(
+    evaluation_result: Any,
+    examples: list[dict[str, Any]],
+    metric_names: list[str],
+    report_name: str,
+    top_k: int,
+    output_dir: str = "eval_results",
+) -> dict[str, Any]:
+    """Persist DeepEval scores in the same shape as the scope evaluation."""
+    rows = []
+    for index, (item, test_result) in enumerate(zip(examples, evaluation_result.test_results)):
+        metrics = {}
+        for metric_name, metric_data in zip(metric_names, test_result.metrics_data):
+            metrics[metric_name] = {
+                "score": metric_data.score,
+                "reason": metric_data.reason,
+                "success": metric_data.success,
+            }
+        rows.append({
+            "id": item.get("id") or index,
+            "input": item["question"],
+            "metrics": metrics,
+        })
+
+    averages = {}
+    for metric_name in metric_names:
+        scores = [
+            row["metrics"][metric_name]["score"]
+            for row in rows
+            if row["metrics"].get(metric_name, {}).get("score") is not None
+        ]
+        averages[metric_name] = round(sum(scores) / len(scores), 4) if scores else None
+
+    report = {
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "dataset": "golden_quality_eval",
+        "metric": metric_names,
+        "top_k": top_k,
+        "average_score": averages,
+        "total_examples": len(rows),
+        "cases": rows,
+    }
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+    output = output_path / f"{report_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    output.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Saved {report_name} evaluation to {output}")
+    return report

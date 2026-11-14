@@ -16,7 +16,7 @@ class Rerankers:
 
         self.model.to(self.device)
 
-    def rerank(self,query,documents,top_k=4):
+    def rerank(self,query,documents,top_k=6):
         if not documents:
             return []
         pairs = [[query, doc.page_content if hasattr(doc, "page_content") else doc] for doc in documents

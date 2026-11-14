@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="chat-launcher" id="chat-launcher" aria-label="Open chat" aria-expanded="false">
+        <span class="launcher-icon">✦</span>
+        <span class="launcher-label">Ask AI</span>
+    </button>
+
+    <section class="chat-widget" id="chat-widget" aria-label="AI chat" aria-hidden="true">
+        <header class="chat-header">
+            <div class="assistant-avatar">✦</div>
+            <div class="assistant-info">
+                <h1>RAG Assistant</h1>
+                <p><span class="online-dot"></span> Ready to help</p>
+            </div>
+            <button class="close-chat" id="close-chat" aria-label="Close chat">×</button>
+        </header>
+
+        <main class="messages" id="messages" aria-live="polite">
+            <div class="message assistant-message">
+                <div class="bubble">Hey! Ask me anything about your documents.</div>
+                <time>Now</time>
+            </div>
+        </main>
+
+        <form class="chat-form" id="chat-form">
+            <input type="text" name="user_msg" id="user" placeholder="Type your question..." autocomplete="off">
+            <button id="click" type="submit" aria-label="Send message">➤</button>
+        </form>
+    </section>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

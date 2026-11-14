@@ -14,7 +14,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
 from Eval.eval_common import load_scope_examples
 from src.llm_gateway import GroqJudge
-from src.ragpipline.pipline import rag_pipline
+from src.pipline.pipline import pipline_eval
 
 scope_metric = GEval(
     name="cpu_answer_scope",
@@ -63,7 +63,7 @@ def run(top_k: int = 6,
     dataset_name: str | None = None,
     throttle_seconds: int = 5,
 ):
-    rag = rag_pipline()
+    rag = pipline_eval()
     dataset_name, examples = load_scope_examples(dataset_name)
     test_cases = []
     for item in examples:

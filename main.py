@@ -34,24 +34,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
 class user_msg(BaseModel):
     msg: str
     thread_id : str
 
-
-
 @app.get("/")
 def check():
     return "Fast api is working"
-
-
-# crypto.randomUUID() #thread id come from frontend 
-
-
-# the main problem is about memoery of every thread_id 
-
 
 @app.post("/chat")
 async def chat(query:user_msg):
@@ -64,6 +53,9 @@ async def chat(query:user_msg):
     result = await workflow.ainvoke({'msg':user_msg},{'configurable':{'thread_id':thread_id}})
 
     # use result['msg'][-1].content
+    if result['check'] is False:
+        return {result['answer']}
+
     final_result = result['msg'][-1].content
 
     return final_result

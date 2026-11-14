@@ -4,15 +4,16 @@ from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig, DisplayConfig
 from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
 from deepeval.test_case import LLMTestCase
-from Eval.eval_common import load_examples
+from Eval.eval_common import load_examples, save_metric_report
 from src.Retriever.EVAL_reterival import Reranker_reterival
 from src.llm_gateway import GroqJudge, GroqJudge2
 
-def run(top_k: int = 6):
-    retriever = Reranker_reterival()
+def run(top_k, R_top_k):
+    retriever = Reranker_reterival(top_k,R_top_k)
     cases = []
-    for item in load_examples():
-        docs = retriever.invoke(item["question"], top_k)
+    examples = load_examples()
+    for item in examples:
+        docs = retriever.invoke(item["question"])
         cases.append(LLMTestCase(
             input=item["question"],
             actual_output="retrieval-only evaluation",
@@ -20,7 +21,7 @@ def run(top_k: int = 6):
             retrieval_context=[doc["document"].page_content for doc in docs],
 
         ))
-    return evaluate(
+    evaluation_result = evaluate(
         test_cases=cases,
         metrics=[
             ContextualRecallMetric(threshold=.7, model=GroqJudge(), include_reason=True),
@@ -29,9 +30,14 @@ def run(top_k: int = 6):
         async_config=AsyncConfig(max_concurrent=1, throttle_value=100),
         display_config=DisplayConfig(results_folder="./eval_results"),
     )
+    save_metric_report(
+        evaluation_result, examples,
+        ["contextual_recall", "contextual_precision"],
+        "retrieval", top_k,
+    )
+    return evaluation_result
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--top-k", type=int, default=5)
-    run(parser.parse_args().top_k)
+ 
+    run(8,4)

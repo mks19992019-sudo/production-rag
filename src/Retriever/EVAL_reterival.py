@@ -12,7 +12,7 @@ client = QdrantClient(
     
 )
 
-def reterival():
+def reterival(top_k=15):
     vector_db =QdrantVectorStore.from_existing_collection(
         embedding= jinaEmbedding_model(),
         collection_name="CPU RAG",
@@ -21,15 +21,17 @@ def reterival():
         )
     logfire.info('fetchting the data.... from db ')
     
-    return vector_db.as_retriever(search_kwargs={'k':15})
+    return vector_db.as_retriever(search_kwargs={'k': top_k})
 
 
 
 class Reranker_reterival:
-    def __init__(self):
+    def __init__(self,top_k,R_top_k):
+
+        self.R_top_k = R_top_k
         self.Reranker = Rerankers()
-        self.reterival = reterival()
-    def invoke(self,query,top_k):
+        self.reterival = reterival(top_k)
+    def invoke(self,query):
         documents = self.reterival.invoke(query)
         logfire.info(
             "Documents retrieved",
@@ -39,7 +41,7 @@ class Reranker_reterival:
         results = self.Reranker.rerank(
             query=query,
             documents=documents,
-            top_k=top_k,
+            top_k=self.R_top_k,
         )
 
         return results
