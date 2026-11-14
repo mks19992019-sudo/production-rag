@@ -109,7 +109,7 @@ chain = final_prompt | model() | StrOutputParser()
 
 
 
-def generate(query: str, context: list[str],msg=None) -> str:
+def generate(query: str, context,msg=[]) -> str:
     """Generate a grounded answer from the query and context chunks."""
     context_text = "\n\n".join(context)
 

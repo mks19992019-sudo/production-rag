@@ -6,21 +6,19 @@ from deepeval.metrics import AnswerRelevancyMetric, FaithfulnessMetric
 from deepeval.test_case import LLMTestCase
 from Eval.eval_common import load_examples, save_metric_report
 from src.genrator.genrator import generate
-from src.Retriever.EVAL_reterival import Reranker_reterival
 from src.llm_gateway import GroqJudge, GroqJudge2
 
-def run(top_k: int = 6):
-    #retriever = Reranker_reterival()
+def run():
     cases = []
-    examples = load_examples()
+    examples = load_examples(dataset_name="cpu_homepage_golden_dataset")
     for item in examples:
-        #docs = retriever.invoke(item["question"], top_k)
-        #context = [doc["document"].page_content for doc in docs]
+        print(item["expected_retrieval_output"])
+       
         cases.append(LLMTestCase(
             input=item["question"],
-            actual_output=generate(item["question"]), # ans genrated by llm
-            expected_output=item["expected_answer"], # actual answer from the dataset
-            context=item["expected_retrieval_output"],
+            
+            actual_output=generate(query=item["question"],context=item['expected_retrieval_output']), # ans genrated by llm
+            retrieval_context=item["expected_retrieval_output"] if isinstance(item["expected_retrieval_output"], list) else [item["expected_retrieval_output"]] # deep eval dont know from where our retrival comes so that why we use it bec faithfullnes meteric have need this retrival context
             
         ))
     evaluation_result = evaluate(
@@ -34,11 +32,10 @@ def run(top_k: int = 6):
     )
     save_metric_report(
         evaluation_result, examples,
-        ["faithfulness", "answer_relevancy"], "generator", top_k,
+        ["faithfulness", "answer_relevancy"], "generator",
     )
     return evaluation_result
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--top-k", type=int, default=6)
-    run(parser.parse_args().top_k)
+
+    run()

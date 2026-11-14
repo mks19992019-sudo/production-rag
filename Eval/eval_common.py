@@ -101,7 +101,7 @@ def save_metric_report(
     examples: list[dict[str, Any]],
     metric_names: list[str],
     report_name: str,
-    top_k: int,
+    top_k: int | None,
     output_dir: str = "eval_results",
 ) -> dict[str, Any]:
     """Persist DeepEval scores in the same shape as the scope evaluation."""
