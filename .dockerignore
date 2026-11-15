@@ -4,3 +4,15 @@
 __pycache__
 .pytest_cache
 .ipynb_checkpoints
+
+
+__pycache__/
+
+.deepeval/
+.logfire/
+
+*.pyc
+.DS_Store
+
+ui_part/
+eval_results/

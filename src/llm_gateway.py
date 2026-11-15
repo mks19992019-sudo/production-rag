@@ -1,4 +1,4 @@
-from langchain_huggingface import HuggingFaceEmbeddings
+#from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain_community.embeddings import JinaEmbeddings
 from src.config.settings import settings
@@ -8,9 +8,10 @@ GROQ_API:str = None
 GROQ_API2 :str = None
 model_ :str = settings.model_
 JINA_API_KEY = None
-_embeddings = None
+#_embeddings = None
 _jina_embeddings = None
 
+""""
 # hugging face Embeddings model
 def embedding_model():
     global _embeddings
@@ -20,7 +21,7 @@ def embedding_model():
             model_name="BAAI/bge-base-en-v1.5"
         )
 
-    return _embeddings
+    return _embeddings """
 
 
 ## jina Embeddings model 

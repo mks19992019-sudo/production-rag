@@ -68,7 +68,7 @@ class Reranker_reterival:
         results = self.Reranker.rerank(
             query=query,
             documents=documents,
-            top_k=self.R_top_k,
+            top_n=self.R_top_k,
         )
 
         return results

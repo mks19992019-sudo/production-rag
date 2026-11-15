@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     LANGSMITH_TRACING: bool = False
     LANGSMITH_API_KEY: str | None = None
     LANGSMITH_PROJECT: str 
+    COHERE_API_KEY: str
 
 
 settings = Settings()

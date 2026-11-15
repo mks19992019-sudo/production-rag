@@ -17,6 +17,6 @@ def reranking_node(state: AgentState):
     reranked_documents = reranker.rerank(
         query=query,
         documents=state['documents'],
-        top_k=load_para.rerank_top_k,
+        top_n=load_para.rerank_top_k,
     )
     return {'reranked_documents': reranked_documents}
