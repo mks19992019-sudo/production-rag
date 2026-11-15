@@ -111,8 +111,10 @@ chain = final_prompt | model() | StrOutputParser()
 
 def generate(query: str, context,msg=[]) -> str:
     """Generate a grounded answer from the query and context chunks."""
-    context_text = "\n\n".join(context)
-
+    if isinstance(context,list):
+        context_text = "\n\n".join(context)
+    else:
+        context_text = context
 
     return chain.invoke({"question": query, "context": context_text ,'chat_history':msg})
 

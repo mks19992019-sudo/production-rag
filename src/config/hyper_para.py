@@ -3,7 +3,7 @@
 # production 'parameters'
 class production:
     top_k: int = 6
-    rerank_top_k: int = 6
+    rerank_top_k: int = 3
     chunk_size: int = 250
     chunk_overlap: int = 50
 
@@ -17,5 +17,5 @@ class experiment:
 
 
 
-load_para = experiment()
+load_para = production()
 

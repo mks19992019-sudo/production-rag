@@ -12,7 +12,7 @@ def run():
     cases = []
     examples = load_examples(dataset_name="cpu_homepage_golden_dataset")
     for item in examples:
-        print(item["expected_retrieval_output"])
+        #print(item["expected_retrieval_output"])
        
         cases.append(LLMTestCase(
             input=item["question"],

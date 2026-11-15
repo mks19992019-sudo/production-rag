@@ -12,7 +12,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
 from Eval.eval_common import load_examples
 from src.llm_gateway import GroqJudge
-from src.ragpipline.pipline import rag_pipline
+from src.pipline.pipline import pipline_eval
 
 
 completeness_metric = GEval(
@@ -60,10 +60,10 @@ completeness_metric = GEval(
 
 
 def run(top_k: int = 6, output_dir: str = "eval_results"):
-    rag = rag_pipline()
+    rag = pipline_eval()
     rows = []
     for item in load_examples():
-        result = rag.invoke(item["question"], top_k)
+        result = rag.invoke(item["question"])
         case = LLMTestCase(
             input=item["question"],
             actual_output=result["ans"],

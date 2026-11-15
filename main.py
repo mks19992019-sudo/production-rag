@@ -8,6 +8,7 @@ from redis.asyncio import Redis
 from dotenv import load_dotenv
 load_dotenv()
 import os
+import time ,logfire
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -44,6 +45,7 @@ def check():
 
 @app.post("/chat")
 async def chat(query:user_msg):
+    start_time = time.time()
     user_msg= query.msg
     thread_id = query.thread_id
 
@@ -54,9 +56,13 @@ async def chat(query:user_msg):
 
     # use result['msg'][-1].content
     if result['check'] is False:
+        logfire.info("No relevant documents found.")
         return {result['answer']}
 
     final_result = result['msg'][-1].content
+
+    end_time = time.time()
+    logfire.info(f"Response generated in {end_time - start_time:.2f} seconds.")
 
     return final_result
 
