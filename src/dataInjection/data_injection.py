@@ -8,7 +8,7 @@ from src.config.settings import settings
 import logfire
 
 from qdrant_client import QdrantClient
-import asyncio
+
 
 logfire.configure()
 
@@ -72,8 +72,8 @@ def chunking_Recursive_text_split(documents):
 def vector_db():
     logfire.info('loading the data and prepare the docs')
     docs = extract()
-    logfire.info('start chucking of data')
-    chunks = chunking_semantic(docs)
+    logfire.info(f"start text spliting 'chuck_size' :250,'chuck_overlap':50")
+    chunks = chunking_Recursive_text_split(docs)
 
 
     
@@ -93,13 +93,16 @@ def vector_db():
 
 
 async def initialize_vectorstore():
-    #client.delete_collection("CPU RAG")
+
 
     if not client.collection_exists("CPU RAG"):
-        logfire.info('vector db not found...')
-
-        vector_db()
-        return
+        with logfire.span("vector_db_creation"):
+            logfire.info('vector database not found, creating new one....')
+            vector_db()
+            logfire.info('vector database created successfully....')
+        
+            return
+        
     logfire.info('vector db found....')
     return
 

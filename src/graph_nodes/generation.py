@@ -12,4 +12,4 @@ def generation_node(state: AgentState):
         for item in state['reranked_documents']
     ]
     answer = generate(query=query, context=context, msg=history)
-    return {'answer': answer, 'msg': [AIMessage(content=answer)]}
+    return {'msg': [AIMessage(content=answer)]}

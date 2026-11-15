@@ -1,31 +1,42 @@
+import os
+import time
+from contextlib import asynccontextmanager
+
+import logfire
+from dotenv import load_dotenv
+
+load_dotenv()
+logfire.configure(send_to_logfire="if-token-present", service_name="agentic-rag")
+
 from fastapi import FastAPI
 from src.graph import get_workflow
 from pydantic import BaseModel
 from src.graph import initialize_resources , close_graph_resources , get_checkpointer
-from contextlib import asynccontextmanager
 from src.dataInjection.data_injection import initialize_vectorstore
-from redis.asyncio import Redis
-from dotenv import load_dotenv
-load_dotenv()
-import os
-import time ,logfire
+
 
 from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    await initialize_vectorstore()
-    await initialize_resources()
+    with logfire.span("FastAPI application startup",):
+        logfire.info("Starting up FastAPI application and initializing resources...")
+        await initialize_vectorstore()
+        await initialize_resources()
     try:
         yield
     finally:
-        await close_graph_resources()
+        with logfire.span("FastAPI application shutdown",):
+            logfire.info("Shutting down FastAPI application and closing resources...")
+            await close_graph_resources()
 
 
 app = FastAPI(title='Rag_Agent',
               description='Production rag ',
               lifespan=lifespan)
+
+logfire.instrument_fastapi(app)
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,26 +56,33 @@ def check():
 
 @app.post("/chat")
 async def chat(query:user_msg):
-    start_time = time.time()
+
     user_msg= query.msg
     thread_id = query.thread_id
 
-   
-    
-    workflow =  await get_workflow()
-    result = await workflow.ainvoke({'msg':user_msg},{'configurable':{'thread_id':thread_id}})
+    try:
+        workflow = await get_workflow()
+        result = await workflow.ainvoke(
+            {'msg': user_msg},
+            {'configurable': {'thread_id': thread_id}},
+        )
 
-    # use result['msg'][-1].content
-    if result['check'] is False:
-        logfire.info("No relevant documents found.")
-        return {result['answer']}
+        # use result['msg'][-1].content
+        if result['check'] is False:
 
-    final_result = result['msg'][-1].content
+            return {result['answer']}
 
-    end_time = time.time()
-    logfire.info(f"Response generated in {end_time - start_time:.2f} seconds.")
+        final_result = result['msg'][-1].content
 
-    return final_result
+
+
+
+        return final_result
+    except Exception:
+        
+        logfire.exception("Chat request failed", thread_id=thread_id)
+
+       
 
 
 
