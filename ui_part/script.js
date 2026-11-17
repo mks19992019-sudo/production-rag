@@ -6,7 +6,7 @@ const input = document.getElementById('user');
 const sendButton = document.getElementById('click');
 const messages = document.getElementById('messages');
 
-const CHAT_URL = 'http://localhost:8000/chat';
+const CHAT_URL = 'https://production-rag-1-ie0x.onrender.com/chat';
 // A new id is intentionally created on every page load/refresh.
 const threadId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
 

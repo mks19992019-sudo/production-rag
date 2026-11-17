@@ -48,7 +48,7 @@ logfire.instrument_fastapi(app)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or your specific frontend URL like "http://localhost:5173"
+    allow_origins=["https://production-rag-2-e33u.onrender.com"],  # Or your specific frontend URL like "http://localhost:5173"
     allow_credentials=False,
     allow_methods=["*"],   # This is what allows the OPTIONS preflight
     allow_headers=["*"],
