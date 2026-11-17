@@ -22,6 +22,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 score = cosine_similarity([q],document)[0]
 print(score)
+#tesing
 
 
 
