@@ -10,10 +10,6 @@ import logfire
 from qdrant_client import QdrantClient
 
 
-logfire.configure()
-
-
-
 client = QdrantClient(
         url=settings.QDRANT_CLUSTER_URL,
         api_key=settings.QDRANT_API_KEY

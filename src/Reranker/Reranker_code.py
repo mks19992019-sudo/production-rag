@@ -1,15 +1,13 @@
-import torch
-from transformers import AutoTokenizer , AutoModelForSequenceClassification
-from pyclbr import Class
 
 from langsmith import traceable
-import logfire
+
+
 import cohere
 from src.config.settings import settings
 
 
 
-""""
+
 class Reranker_model:
     def __init__(self,model_name="rerank-v5.0-pro"):
 
@@ -43,27 +41,27 @@ class Reranker_model:
             rank_docs.append(original_docs)
         return rank_docs
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #MODEL_NAME = "BAAI/bge-reranker-base"
 #MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
@@ -118,3 +116,4 @@ class Reranker_model:
 
 
 
+"""

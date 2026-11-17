@@ -14,7 +14,6 @@ from pydantic import BaseModel
 from src.graph import initialize_resources , close_graph_resources , get_checkpointer
 from src.dataInjection.data_injection import initialize_vectorstore
 
-
 from fastapi.middleware.cors import CORSMiddleware
 
 
