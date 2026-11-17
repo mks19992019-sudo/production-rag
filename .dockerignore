@@ -1,18 +1,29 @@
-.venv
-.git
-.env
-__pycache__
-.pytest_cache
-.ipynb_checkpoints
 
-
+# Python environment
+.venv/
 __pycache__/
+**/__pycache__/
+*.py[cod]
 
+# Git and local configuration
+.git/
+.env
+
+# Test and development artifacts
+.pytest_cache/
+.ipynb_checkpoints/
 .deepeval/
 .logfire/
-
-*.pyc
 .DS_Store
 
+# Frontend - not required in the API container
 ui_part/
+
+# Offline evaluation outputs and experiments
 eval_results/
+mlartifacts/
+test/
+
+
+
+

@@ -1,5 +1,5 @@
-#import torch
-#from transformers import AutoTokenizer , AutoModelForSequenceClassification
+import torch
+from transformers import AutoTokenizer , AutoModelForSequenceClassification
 from pyclbr import Class
 
 from langsmith import traceable
@@ -9,7 +9,7 @@ from src.config.settings import settings
 
 
 
-
+""""
 class Reranker_model:
     def __init__(self,model_name="rerank-v5.0-pro"):
 
@@ -43,7 +43,7 @@ class Reranker_model:
             rank_docs.append(original_docs)
         return rank_docs
 
-
+"""
 
 
 
@@ -67,7 +67,7 @@ class Reranker_model:
 
 #MODEL_NAME = "BAAI/bge-reranker-base"
 #MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
-"""
+
 class Reranker_model:
 
     def __init__(self,model_name="cross-encoder/ms-marco-MiniLM-L-6-v2"):
@@ -85,7 +85,7 @@ class Reranker_model:
         logfire.info("Reranker initialized",model_name=model_name,device=str(self.device))
 
     @traceable(name="Rerank",run_type="chain",tags=["rag", "reranking"])
-    def rerank(self, query, documents, top_k=6):
+    def rerank(self, query, documents, top_n=6):
 
         if not documents:
             return []
@@ -112,9 +112,9 @@ class Reranker_model:
             # Ranking
 
             ranked = sorted(zip(documents, scores),key=lambda item: item[1],reverse=True)
-            results = [{"document": doc,"score": score}for doc, score in ranked[:top_k]]
+            results = [{"document": doc,"score": score}for doc, score in ranked[:top_n]]
 
-            return results
+            return results 
 
-"""
+
 

@@ -11,14 +11,14 @@ class pipline_eval:
 
     def invoke(self,query,msg_history=None):
         docs = self.rerank_retriver.invoke(query)
-        context = [doc['document'].page_content for doc in docs]
+        context = [doc.page_content for doc in docs]
 
         genrate_ans = generate(query=query,context=context,msg=msg_history)
 
         return {
             'query': query,
             'context' : context,
-            'ans' : genrate_ans
+            'ans' : genrate_ans        
         }
 
 
