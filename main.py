@@ -6,7 +6,8 @@ import logfire
 from dotenv import load_dotenv
 
 load_dotenv()
-logfire.configure(send_to_logfire="if-token-present", service_name="agentic-rag")
+os.environ.setdefault("USER_AGENT", "agentic-rag/1.0")
+
 
 from fastapi import FastAPI
 from src.graph import get_workflow
@@ -15,6 +16,14 @@ from src.graph import initialize_resources , close_graph_resources , get_checkpo
 from src.dataInjection.data_injection import initialize_vectorstore
 
 from fastapi.middleware.cors import CORSMiddleware
+# Keep telemetry configurable in each environment. If a token is missing or
+# temporarily invalid, the API should still start and serve requests.
+logfire_enabled = os.getenv("LOGFIRE_ENABLED", "true").lower() in {"1", "true", "yes", "on"}
+logfire.configure(
+    send_to_logfire="if-token-present" if logfire_enabled else False,
+    service_name="agentic-rag",
+    inspect_arguments=False,
+)
 
 
 @asynccontextmanager

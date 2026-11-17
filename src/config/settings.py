@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     LANGSMITH_API_KEY: str | None = None
     LANGSMITH_PROJECT: str 
     COHERE_API_KEY: str
+    LOGFIRE_TOKEN: str
+    LOGFIRE_SERVICE_NAME: str = "agentic-rag"
+    LOGFIRE_ENVIRONMENT: str = "development"
+    USER_AGENT: str = "agentic-rag/1.0"
 
 
 settings = Settings()
